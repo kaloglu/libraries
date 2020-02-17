@@ -1,10 +1,9 @@
-package com.kaloglu.library.ui.databinding
+package com.kaloglu.library.ui.viewmodel.databinding
 
 import android.view.View
 import android.view.ViewGroup
 import com.kaloglu.library.ui.BaseModel
 import com.kaloglu.library.ui.BaseRecyclerAdapter
-import kotlin.properties.Delegates
 
 abstract class DataBindingRecyclerAdapter<M : BaseModel, VH : DataBindingViewHolder<M>>
     : BaseRecyclerAdapter<M, VH> {

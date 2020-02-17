@@ -1,5 +1,5 @@
 @file:JvmName("UiDataBindingUtil")
-package com.kaloglu.library.ui.databinding
+package com.kaloglu.library.ui.viewmodel.databinding
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

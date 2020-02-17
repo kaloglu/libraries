@@ -2,27 +2,23 @@ package com.kaloglu.library.ui
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.CallSuper
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.kaloglu.library.ui.interfaces.FragmentLifecycle
 
 abstract class BaseFragment @ContentView constructor(
     @LayoutRes internal val resourceLayoutId: Int = 0
-) : Fragment(resourceLayoutId) {
-    internal lateinit var rootView: View
+) : Fragment(resourceLayoutId), FragmentLifecycle {
 
-    val activity by lazy { getActivity() as BaseActivity }
+    override val activity by lazy { getActivity() as BaseActivity }
 
-    val fragmentTag = this.javaClass.simpleName
+    override val fragmentTag = this.javaClass.simpleName
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        rootView = view
-        init(savedInstanceState)
+        fragmentView = view
         super.onViewCreated(view, savedInstanceState)
+        initUserInterface(savedInstanceState)
     }
-
-    @CallSuper
-    protected open fun init(savedInstanceState: Bundle?) = Unit
 
 }

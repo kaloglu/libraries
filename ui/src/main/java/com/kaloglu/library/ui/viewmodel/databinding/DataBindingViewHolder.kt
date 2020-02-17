@@ -1,4 +1,4 @@
-package com.kaloglu.library.ui.databinding
+package com.kaloglu.library.ui.viewmodel.databinding
 
 import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.ui.BaseViewHolder
