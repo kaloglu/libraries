@@ -2,6 +2,7 @@ package com.kaloglu.library.ui.viewmodel.databinding
 
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import com.kaloglu.library.ui.BR
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.ViewModelActivity
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
@@ -12,7 +13,7 @@ abstract class BindingActivity<VDB : ViewDataBinding, VM : BaseViewModel>
 
     abstract fun VDB.onBind()
 
-    abstract fun getBindingVariable(): Int
+    override fun getBindingVariable() = BR.dataModel
 
     override fun initUserInterface() {
         viewDataBinding = DataBindingUtil.setContentView(this, resourceLayoutId)

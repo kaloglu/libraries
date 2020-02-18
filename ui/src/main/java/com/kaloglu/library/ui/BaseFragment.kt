@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import com.kaloglu.library.ui.interfaces.FragmentLifecycle
 
 abstract class BaseFragment @ContentView constructor(
-    @LayoutRes internal val resourceLayoutId: Int = 0
+    @LayoutRes internal open val resourceLayoutId: Int = 0
 ) : Fragment(resourceLayoutId), FragmentLifecycle {
+
+    override lateinit var fragmentView: View
 
     override val activity by lazy { getActivity() as BaseActivity }
 

@@ -1,12 +1,22 @@
 package com.kaloglu.library.ui.viewmodel
 
+import android.os.Bundle
+import androidx.annotation.LayoutRes
 import com.kaloglu.library.ui.BaseFragment
 import com.kaloglu.library.ui.viewmodel.interfaces.Mwwm
 
-abstract class ViewModelFragment<VM : BaseViewModel> : BaseFragment(), Mwwm<VM>{
-    override val activity by lazy { getActivity() as ViewModelActivity<*> }
+abstract class ViewModelFragment<VM : BaseViewModel>(
+        @LayoutRes override val resourceLayoutId: Int = 0
+) : BaseFragment(resourceLayoutId), Mwwm<VM> {
+    override lateinit var viewModel: VM
 
-    /*override val viewModel: VM
-        get() = activity.getViewModel() as VM*/
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        onCreateViewModel()
+    }
+
+    override fun onCreateViewModel() {
+        viewModel = activity.getViewModel(viewModelClass)
+    }
 
 }

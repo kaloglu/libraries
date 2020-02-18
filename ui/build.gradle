@@ -2,6 +2,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.github.dcendents.android-maven'
+group ="com.github.kaloglu"
+
 
 android {
     compileSdkVersion 29
@@ -11,7 +14,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 100
-        versionName "1.0.0"
+        versionName "1.0.0-Beta1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
