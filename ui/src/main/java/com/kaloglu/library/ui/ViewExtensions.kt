@@ -28,14 +28,14 @@ fun <A : BaseRecyclerAdapter<*, *>> RecyclerView.setup(
     return adapter
 }
 
-fun <A : BaseRecyclerAdapter<M, *>, M : BaseModel>
-        A.setItemClickListener(onClick: ((M) -> Unit)): BaseRecyclerAdapter<M, *> {
+fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
+        A.setItemClickListener(onClick: ((RI, Int) -> Unit)): BaseRecyclerAdapter<RI, *> {
     this.onItemClick = onClick
     return this
 }
 
-fun <A : BaseRecyclerAdapter<M, *>, M : BaseModel>
-        A.setViewClickListener(onClick: ((M, View) -> Unit)): BaseRecyclerAdapter<M, *> {
+fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
+        A.setViewClickListener(onClick: ((RI, View, Int) -> Unit)): BaseRecyclerAdapter<RI, *> {
     this.onViewClick = onClick
     return this
 }

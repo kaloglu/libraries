@@ -2,24 +2,30 @@ package com.kaloglu.library.ui
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncDifferConfig
-import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
+import kotlin.properties.Delegates
 
-abstract class BaseRecyclerAdapter<RI : RecyclerItem, VH : BaseViewHolder<RI>> :
-    ListAdapter<RI, VH>(
-        AsyncDifferConfig.Builder<RI>(DiffItemSimpleCallback<RI>()).build()
-    ), ClickableRecyclerItemAdapter<RI> {
+abstract class OldSchoolBaseRecyclerAdapter<RI : RecyclerItem, VH : BaseViewHolder<RI>>
+    : RecyclerView.Adapter<VH>(), DiffAdapter, ClickableRecyclerItemAdapter<RI> {
 
     override var onItemClick: ((RI, Int) -> Unit)? = null
     override var onViewClick: ((RI, View, Int) -> Unit)? = null
+
+    var items: List<RI> by Delegates.observable(emptyList()) { _, old, new ->
+        notifyDiff(old, new) { o, n -> compareId<Any>(o, n) }
+    }
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
 
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder
             .setOnViewClick(onViewClick)
-            .bindItem(getItem(position), onItemClick)
+            .bindItem(items[position], onItemClick)
+
+    override fun getItemCount() = items.size
+
+    protected open fun <T : Any> compareId(o: RI, n: RI) = o.getId<T>() == n.getId<T>()
 
     /*class Seperator(
         override var parent: RecyclerItem,
