@@ -8,7 +8,6 @@ import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.kaloglu.library.ui.BR
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.ViewModelFragment
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
@@ -43,7 +42,7 @@ abstract class BindingFragment<VDB : ViewDataBinding, VM : BaseViewModel>
         return viewDataBinding.root
     }
 
-    override fun getBindingVariable() = BR.dataModel
+//    override fun getBindingVariable() = BR.dataModel
     override fun observeViewModel() {
         //vieWModel state observe
     }

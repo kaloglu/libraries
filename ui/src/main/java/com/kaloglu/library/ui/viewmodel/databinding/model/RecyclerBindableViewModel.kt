@@ -9,7 +9,7 @@ abstract class RecyclerBindableViewModel : BindableViewModel(), RecyclerItem {
     @get:Bindable
     abstract override var layoutId: Int
 
-    @get:Bindable
-    override val parent: RecyclerBindableViewModel? = null
+//    @get:Bindable
+//    override val parent: RecyclerBindableViewModel? = null
 
 }

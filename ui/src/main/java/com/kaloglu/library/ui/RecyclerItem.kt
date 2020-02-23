@@ -7,7 +7,6 @@ interface RecyclerItem : BaseModel {
     @get:LayoutRes
     var layoutId: Int
 
-    val parent: RecyclerItem?
+//    val parent: RecyclerItem?
 
-    var position: Int
 }

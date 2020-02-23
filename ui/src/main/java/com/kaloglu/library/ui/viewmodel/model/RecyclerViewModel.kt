@@ -5,6 +5,6 @@ import com.kaloglu.library.ui.viewmodel.BaseViewModel
 
 abstract class RecyclerViewModel : BaseViewModel(), RecyclerItem {
 
-    override val parent: RecyclerViewModel? = null
+//    override val parent: RecyclerViewModel? = null
 
 }
