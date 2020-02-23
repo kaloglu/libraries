@@ -1,10 +1,10 @@
-[![](https://jitpack.io/v/kaloglu/libraries.svg)](https://jitpack.io/#kaloglu/libraries)
+**latestVersion** => [![](https://jitpack.io/v/kaloglu/libraries.svg)](https://jitpack.io/#kaloglu/libraries)
 
 
 **usage:** 
 ```groovy
-    implementation 'com.github.kaloglu.libraries:ktx:1.0.0-Beta3'
-    implementation 'com.github.kaloglu.libraries:ui:1.0.0-Beta3'
+    implementation 'com.github.kaloglu.libraries:ktx:latestVersion'
+    implementation 'com.github.kaloglu.libraries:ui:latestVersion'
 ```
 
 
