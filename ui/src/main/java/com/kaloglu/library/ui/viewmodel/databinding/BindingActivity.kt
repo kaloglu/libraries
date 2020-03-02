@@ -7,7 +7,7 @@ import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.ViewModelActivity
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
 
-abstract class BindingActivity<VDB : ViewDataBinding, VM : BaseViewModel>
+abstract class BindingActivity<VDB : ViewDataBinding, VM : BaseViewModel<*>>
     : ViewModelActivity<VM>(), DataBinding<VDB> {
 //    override val viewModel:BaseViewModel = getViewModel()
 

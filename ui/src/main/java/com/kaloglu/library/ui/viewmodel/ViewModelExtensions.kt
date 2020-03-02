@@ -5,7 +5,7 @@ package com.kaloglu.library.ui.viewmodel
 import androidx.lifecycle.ViewModelProviders
 import com.kaloglu.library.ui.BaseActivity
 
-fun <VM : BaseViewModel> ViewModelFragment<VM>.getViewModel(
+fun <VM : BaseViewModel<*>> ViewModelFragment<VM>.getViewModel(
         viewModelClass: Class<VM>,
         creator: (() -> VM)? = null
 ): VM {
@@ -15,7 +15,7 @@ fun <VM : BaseViewModel> ViewModelFragment<VM>.getViewModel(
         ViewModelProviders.of(this, BaseViewModelFactory(creator)).get(viewModelClass)
 }
 
-fun <VM : BaseViewModel> BaseActivity.getViewModel(
+fun <VM : BaseViewModel<*>> BaseActivity.getViewModel(
         viewModelClass: Class<VM>,
         creator: (() -> VM)? = null
 ): VM {

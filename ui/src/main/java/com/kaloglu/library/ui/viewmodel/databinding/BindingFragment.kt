@@ -12,7 +12,7 @@ import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.ViewModelFragment
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
 
-abstract class BindingFragment<VDB : ViewDataBinding, VM : BaseViewModel>
+abstract class BindingFragment<VDB : ViewDataBinding, VM : BaseViewModel<*>>
 @ContentView constructor(
         @LayoutRes override val resourceLayoutId: Int = 0
 ) : ViewModelFragment<VM>(), DataBinding<VDB> {

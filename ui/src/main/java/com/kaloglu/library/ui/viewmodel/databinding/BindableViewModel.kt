@@ -4,8 +4,9 @@ import androidx.databinding.Observable
 import androidx.databinding.PropertyChangeRegistry
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.BindableField
+import com.kaloglu.library.ui.viewmodel.states.State
 
-abstract class BindableViewModel : BaseViewModel(), Observable, BindableField {
+abstract class BindableViewModel<S : State>() : BaseViewModel<S>(), Observable, BindableField {
 
     @Transient
     private var mCallbacks: PropertyChangeRegistry? = null
