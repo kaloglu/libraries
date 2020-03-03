@@ -11,7 +11,16 @@ abstract class BaseViewModel<S : State> : ViewModel() {
 
     private val _state: MutableLiveData<S> = MutableLiveData()
 
+    init {
+        state.observeForever {
+            onState(it)
+        }
+    }
+
+    abstract fun onState(state: S)
+
     fun postState(state: S) {
         _state.postValue(state)
     }
+
 }
