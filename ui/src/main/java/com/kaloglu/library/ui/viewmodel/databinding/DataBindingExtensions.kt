@@ -1,4 +1,5 @@
 @file:JvmName("UiDataBindingUtil")
+
 package com.kaloglu.library.ui.viewmodel.databinding
 
 import android.view.LayoutInflater
@@ -20,7 +21,16 @@ import androidx.databinding.ViewDataBinding
  * @return ViewDataBinding
  *
  * */
-fun ViewGroup.inflateBinding(@LayoutRes layoutId: Int): ViewDataBinding =
+fun <VDB : ViewDataBinding> LayoutInflater.inflateViewHolderBinding(
+    container: ViewGroup?,
+    @LayoutRes layoutId: Int,
+    onInflate: VDB.() -> Unit
+): VDB = DataBindingUtil.inflate<VDB>(this, layoutId, container, false)
+    .apply {
+        onInflate(this)
+    }
+
+fun ViewGroup.inflateViewHolderBinding(@LayoutRes layoutId: Int): ViewDataBinding =
     DataBindingUtil.inflate(LayoutInflater.from(context), layoutId, this, false)
 
 @InverseMethod("stringToInt")

@@ -5,7 +5,6 @@ package com.kaloglu.library.ktx
 import com.kaloglu.library.ktx.GenericExtensions.DateStringPattern
 import com.kaloglu.library.ktx.GenericExtensions.LOCALE_TR
 import com.kaloglu.library.ktx.GenericExtensions.UI_DATE_FORMAT
-import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -39,64 +38,28 @@ fun Calendar.addYear(years: Int): Calendar {
     return this
 }
 
-fun Long.getMinutes(): Long {
-    return TimeUnit.SECONDS.toMinutes(this)
-}
+fun Long.getMinutes() = TimeUnit.SECONDS.toMinutes(this)
 
-fun Long.getSeconds(): Long {
-    return this - (this.getMinutes() * 60)
-}
+fun Long.getSeconds() = this - (this.getMinutes() * 60)
 
-fun Date.getMonthName(): String {
-    return calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, LOCALE_TR)
-}
+fun Date.getMonthName() =
+    calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, LOCALE_TR) ?: ""
 
-fun Date.getDayOfMonth(): Int {
-    return calendar().get(Calendar.DAY_OF_MONTH)
-}
+fun Date.getDayOfMonth() = calendar().get(Calendar.DAY_OF_MONTH)
 
-@JvmOverloads
-fun Long?.toDateTime(datePattern: String = DateStringPattern): String {
-    if (this == null) {
-        return String.empty
-    }
+fun Long.toDateTime(datePattern: String = DateStringPattern): String =
+    SimpleDateFormat(datePattern, LOCALE_TR).format(Date(this))
 
-    val date = Date(this)
-    val format = SimpleDateFormat(datePattern, LOCALE_TR)
-    return format.format(date)
-}
-
-
-fun currentTimeForLong(): Long {
-    return System.currentTimeMillis()
-}
+fun currentTimeForLong() = System.currentTimeMillis()
 
 fun Date.toFormattedDate(): String = UI_DATE_FORMAT.format(this)
 
 fun Long.toFormattedDate() = Date(this).toFormattedDate()
 
-fun String?.toFormattedDate(): String {
-    if (this == null)
-        return ""
-
-    val formatter = SimpleDateFormat(DateStringPattern, LOCALE_TR)
-
-    return formatter.parse(this).toFormattedDate()
-
-}
+fun String.toFormattedDate() =
+    SimpleDateFormat(DateStringPattern, LOCALE_TR).parse(this)?.toFormattedDate()
 
 @JvmOverloads
-fun String?.toTimeStampLong(dateStringPattern: String = DateStringPattern): Long {
-    var timeStamp: Long = -1
-    if (this == null)
-        return timeStamp
-
-    try {
-        timeStamp = SimpleDateFormat(dateStringPattern, LOCALE_TR).parse(this).time
-    } catch (e: ParseException) {
-        e.printStackTrace()
-    } finally {
-        return timeStamp
-    }
-}
+fun String.toTimeStampLong(dateStringPattern: String = DateStringPattern) =
+    SimpleDateFormat(dateStringPattern, LOCALE_TR).parse(this)?.time ?: -1
 

@@ -14,6 +14,7 @@ abstract class BaseViewHolder<RVM : RecyclerViewModel<*>>(override val container
 
     override var onViewClick: ((RVM, View, Int) -> Unit)? = null
 
+    @Suppress("CAST_NEVER_SUCCEEDS")
     override fun setOnViewClick(onViewClick: ((RVM, View, Int) -> Unit)?): BaseVH<RVM> {
         this.onViewClick = onViewClick
         return this as BaseVH<RVM>

@@ -8,7 +8,7 @@ abstract class DataBindingRecyclerAdapter<RBVM : RecyclerBindableViewModel<*>>
     : BaseRecyclerAdapter<RBVM, BindingViewHolder<RBVM>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BindingViewHolder<RBVM>(parent.inflateBinding(viewType))
+        BindingViewHolder<RBVM>(parent.inflateViewHolderBinding(viewType))
 
     override fun onBindViewHolder(holder: BindingViewHolder<RBVM>, position: Int) =
         holder.bindVariables(getItem(position))

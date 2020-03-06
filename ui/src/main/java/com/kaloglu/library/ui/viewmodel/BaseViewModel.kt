@@ -1,11 +1,13 @@
 package com.kaloglu.library.ui.viewmodel
 
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.viewmodel.states.State
 
-abstract class BaseViewModel<S : State> : ViewModel() {
+abstract class BaseViewModel<S : State>(application: BaseApplication) :
+    AndroidViewModel(application) {
     val state: LiveData<S>
         get() = _state
 

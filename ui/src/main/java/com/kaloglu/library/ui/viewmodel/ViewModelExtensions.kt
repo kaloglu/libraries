@@ -2,25 +2,18 @@
 
 package com.kaloglu.library.ui.viewmodel
 
-import androidx.lifecycle.ViewModelProviders
-import com.kaloglu.library.ui.BaseActivity
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
+import com.kaloglu.library.ui.BaseApplication
 
-fun <VM : BaseViewModel<*>> ViewModelFragment<VM>.getViewModel(
-        viewModelClass: Class<VM>,
-        creator: (() -> VM)? = null
-): VM {
-    return if (creator == null)
-        ViewModelProviders.of(this).get(viewModelClass)
-    else
-        ViewModelProviders.of(this, BaseViewModelFactory(creator)).get(viewModelClass)
-}
+fun <VM : BaseViewModel<*>> ViewModelStoreOwner.getViewModel(
+    application: BaseApplication,
+    viewModelClass: Class<VM>
+) =
+    ViewModelProvider(this, BaseViewModelFactory(application)).get(viewModelClass)
 
-fun <VM : BaseViewModel<*>> BaseActivity.getViewModel(
-        viewModelClass: Class<VM>,
-        creator: (() -> VM)? = null
-): VM {
-    return if (creator == null)
-        ViewModelProviders.of(this).get(viewModelClass)
-    else
-        ViewModelProviders.of(this, BaseViewModelFactory(creator)).get(viewModelClass)
-}
+fun <VM : BaseViewModel<*>> ViewModelStoreOwner.getViewModel(
+    factory: BaseViewModelFactory,
+    viewModelClass: Class<VM>
+) =
+    ViewModelProvider(this, factory).get(viewModelClass)

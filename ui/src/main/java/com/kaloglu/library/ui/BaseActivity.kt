@@ -9,7 +9,8 @@ import com.kaloglu.library.ui.interfaces.ActivityLifecycle
 abstract class BaseActivity @ContentView constructor(
     @LayoutRes internal val resourceLayoutId: Int = 0
 ) : AppCompatActivity(resourceLayoutId), ActivityLifecycle {
-
+    override val application by lazy { getApplication() as BaseApplication }
+    
     final override fun onCreate(savedInstanceState: Bundle?) {
         beforeOnCreate()
 
