@@ -1,3 +1,5 @@
+CI => [![](https://jitci.com/gh/kaloglu/libraries/svg)](https://jitci.com/gh/kaloglu/libraries)
+
 **latestVersion** => [![](https://jitpack.io/v/kaloglu/libraries.svg)](https://jitpack.io/#kaloglu/libraries)
 
 
