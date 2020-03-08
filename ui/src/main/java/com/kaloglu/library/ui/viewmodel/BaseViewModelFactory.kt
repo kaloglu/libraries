@@ -4,7 +4,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.interfaces.Repository
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 @Suppress("MemberVisibilityCanBePrivate")
 open class BaseViewModelFactory<A : BaseApplication>(val application: A) :
     ViewModelProvider.AndroidViewModelFactory(application) {
@@ -19,6 +23,8 @@ open class BaseViewModelFactory<A : BaseApplication>(val application: A) :
         }
 }
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 @Suppress("MemberVisibilityCanBePrivate")
 open class RepositoryViewModelFactory<A : BaseApplication>(
     val application: A,

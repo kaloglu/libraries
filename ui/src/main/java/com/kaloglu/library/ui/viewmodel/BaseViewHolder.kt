@@ -6,8 +6,12 @@ import com.kaloglu.library.ui.interfaces.ClickableRecyclerItem
 import com.kaloglu.library.ui.interfaces.ViewHolder
 import com.kaloglu.library.ui.viewmodel.model.RecyclerViewModel
 import kotlinx.android.extensions.LayoutContainer
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 import com.kaloglu.library.ui.BaseViewHolder as BaseVH
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 abstract class BaseViewHolder<RVM : RecyclerViewModel<*>>(override val containerView: View) :
     RecyclerView.ViewHolder(containerView),
     LayoutContainer, ClickableRecyclerItem<RVM>, ViewHolder<RVM> {

@@ -4,10 +4,10 @@ import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.states.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@ExperimentalCoroutinesApi
+@ObsoleteCoroutinesApi
 abstract class RecyclerViewModel<S : State>(application: BaseApplication) :
-    BaseViewModel<S>(application), RecyclerItem {
-
-//    override val parent: RecyclerViewModel? = null
-
-}
+    BaseViewModel<S>(application), RecyclerItem

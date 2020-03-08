@@ -1,22 +1,45 @@
 package com.kaloglu.library.ui.utils
 
-import com.kaloglu.library.ui.models.ErrorModel
-
 sealed class Resource<out T> {
-    open val body: T? = null
-    open val error: ErrorModel? = null
-    open val isLoading: Boolean = false
+    class Success<out T>(val body: T) : Resource<T>()
+    class Failure(val error: Error) : Resource<Nothing>()
 
-    data class Success<out T>(override val body: T) : Resource<T>()
-    data class Failure(
-        override val error: ErrorModel = ErrorModel(
-            Constants.UNKNOWN_ERROR_CODE,
-            Constants.UNKNOWN_ERROR
-        )
-    ) : Resource<Nothing>()
+    sealed class State : Resource<Nothing>() {
+        object Loading : State()
+        object Loaded : State()
+        object NoInternet : State()
+        object Cancelled : State()
+        object TimeOut : State()
+    }
 
-    class Loading : Resource<Nothing>()
-    class NoInternet : Resource<Nothing>()
-    class Cancelled : Resource<Nothing>()
-    class TimeOut : Resource<Nothing>()
+    fun handleResult(
+        successBlock: (T) -> Unit = {},
+        failureBlock: (Error) -> Unit = {},
+        stateBlock: (State) -> Unit = {}
+    ) {
+        when (this) {
+            is Success -> successBlock(body)
+            is Failure -> failureBlock(error)
+            is State -> stateBlock(this)
+        }
+    }
 }
+
+//sealed class Resource2<out T> {
+//    open val body: T? = null
+//    open val error: ErrorModel? = null
+//    open val isLoading: Boolean = false
+//
+//    data class Success<out T>(override val body: T) : Resource2<T>()
+//    data class Failure(
+//        override val error: ErrorModel = ErrorModel(
+//            Constants.UNKNOWN_ERROR_CODE,
+//            Constants.UNKNOWN_ERROR
+//        )
+//    ) : Resource2<Nothing>()
+//
+//    class Loading : Resource2<Nothing>()
+//    class NoInternet : Resource2<Nothing>()
+//    class Cancelled : Resource2<Nothing>()
+//    class TimeOut : Resource2<Nothing>()
+//}

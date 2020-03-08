@@ -5,7 +5,11 @@ import androidx.annotation.CallSuper
 import androidx.annotation.LayoutRes
 import com.kaloglu.library.ui.BaseFragment
 import com.kaloglu.library.ui.viewmodel.interfaces.Mwwm
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@ObsoleteCoroutinesApi
+@ExperimentalCoroutinesApi
 abstract class ViewModelFragment<VM : BaseViewModel<*>>(
     @LayoutRes override val resourceLayoutId: Int = 0
 ) : BaseFragment(resourceLayoutId), Mwwm<VM> {
