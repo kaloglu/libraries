@@ -9,7 +9,5 @@ import androidx.databinding.ViewDataBinding
 interface DataBinding<VDB : ViewDataBinding> {
     var viewDataBinding: VDB
 
-    fun inflateView(layoutInflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
     fun getBindingVariable(): Int
-    fun observeViewModel()
 }

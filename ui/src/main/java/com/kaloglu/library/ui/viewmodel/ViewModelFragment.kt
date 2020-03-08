@@ -19,6 +19,7 @@ abstract class ViewModelFragment<VM : BaseViewModel<*>>(
 
     override fun onCreateViewModel() {
         viewModel = activity.getViewModel(application, viewModel::class.java)
+        viewModel.observeViewModel()
     }
 
 }

@@ -1,2 +1,2 @@
-include ':app', ':ui', ':ktx'
+include ':ui', ':ktx'
 rootProject.name='Library'

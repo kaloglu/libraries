@@ -12,7 +12,4 @@ abstract class RecyclerBindableViewModel<S : State>(application: BaseApplication
     @get:Bindable
     abstract override var layoutId: Int
 
-//    @get:Bindable
-//    override val parent: RecyclerBindableViewModel? = null
-
 }

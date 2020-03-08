@@ -7,13 +7,10 @@ import androidx.lifecycle.ViewModelStoreOwner
 import com.kaloglu.library.ui.BaseApplication
 
 fun <VM : BaseViewModel<*>> ViewModelStoreOwner.getViewModel(
-    application: BaseApplication,
-    viewModelClass: Class<VM>
-) =
-    ViewModelProvider(this, BaseViewModelFactory(application)).get(viewModelClass)
+    application: BaseApplication, viewModelClass: Class<VM>
+) = ViewModelProvider(this, BaseViewModelFactory(application)).get(viewModelClass)
 
-fun <VM : BaseViewModel<*>> ViewModelStoreOwner.getViewModel(
-    factory: BaseViewModelFactory,
+fun <A : BaseApplication, VM : BaseViewModel<*>> ViewModelStoreOwner.getViewModel(
+    factory: RepositoryViewModelFactory<A>,
     viewModelClass: Class<VM>
-) =
-    ViewModelProvider(this, factory).get(viewModelClass)
+) = ViewModelProvider(this, factory).get(viewModelClass)
