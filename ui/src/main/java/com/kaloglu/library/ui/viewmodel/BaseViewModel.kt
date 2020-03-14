@@ -2,57 +2,86 @@ package com.kaloglu.library.ui.viewmodel
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.utils.Resource
 import com.kaloglu.library.ui.viewmodel.states.State
-import kotlinx.coroutines.*
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.channels.ReceiveChannel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.consumeEach
+import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
+@Suppress("UNCHECKED_CAST")
+@FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-abstract class BaseViewModel<S : State>(application: BaseApplication) :
+abstract class BaseViewModel<M, S : State>(application: BaseApplication) :
     AndroidViewModel(application), CoroutineScope {
 
-    protected abstract val receiveChannel: ReceiveChannel<Resource<*>>
-    protected abstract val stateChannel: Channel<S>
+    override val coroutineContext: CoroutineContext by lazy { Job() + Dispatchers.Main }
 
-    private val job = Job()
+    private val _state = MutableLiveData<S>()
 
-    init {
-        processStream()
-    }
+    val state: LiveData<S> = _state
 
-    override val coroutineContext: CoroutineContext
-        get() = job + Dispatchers.Main
+    protected abstract val resultChannel: ConflatedBroadcastChannel<Resource<M>>
+    protected abstract val eventChannel: ConflatedBroadcastChannel<S>
 
     @CallSuper
     override fun onCleared() {
-        receiveChannel.cancel()
-        coroutineContext.cancel()
+        resultChannel.cancel()
         super.onCleared()
     }
 
-    open fun onResourceState(resourceState: Resource.State) = Unit
+    @CallSuper
+    open fun onAttachViewModel() {
+        launch {
+            resultChannel.consumeEach(this@BaseViewModel::handleResult)
+            eventChannel.consumeEach(this@BaseViewModel::onEvent)
+        }
 
-    suspend fun postState(state: S) {
-        stateChannel.send(state)
+        _state.observeForever(this::onState)
     }
 
-    private fun processStream() {
-        launch {
-            receiveChannel.consumeEach(this@BaseViewModel::resolve)
-            stateChannel.consumeEach(this@BaseViewModel::onState)
+    open fun handleResult(resource: Resource<M>) {
+        resource.handleResult(
+            successBlock = { onDataSuccess() },
+            failureBlock = { onDataFailure() },
+            loadingBlock = { onDataLoading() }
+        )
+    }
+
+    open fun onEvent(event: S) = Unit
+
+    @CallSuper
+    open fun onState(state: S) {
+        when (state) {
+            is State.UiState.Init -> onInitState()
         }
     }
 
-    private fun resolve(value: Resource<*>) =
-        value.handleResult(::onSuccess, ::onFailure, ::onResourceState)
+    @Suppress("MemberVisible")
+    @CallSuper
+    open fun postState(state: S) {
+        _state.postValue(state)
+    }
 
-    abstract fun onState(state: S)
-    abstract fun onSuccess(data: Any?)
-    abstract fun onFailure(error: Error)
+    @CallSuper
+    abstract fun Resource.Loading.onDataLoading()
+
+    @CallSuper
+    abstract fun Resource.Success<M>.onDataSuccess()
+
+    @CallSuper
+    abstract fun Resource.Failure.onDataFailure()
+
+    abstract fun onInitState()
 
 }

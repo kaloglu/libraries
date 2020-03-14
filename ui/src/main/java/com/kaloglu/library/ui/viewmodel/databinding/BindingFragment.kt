@@ -9,8 +9,10 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.ui.viewmodel.ViewModelFragment
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 
+@FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 abstract class BindingFragment<VDB : ViewDataBinding, VM : BindableViewModel<*>>
