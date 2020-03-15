@@ -8,7 +8,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-interface Mwwm<VM : BaseViewModel<*>> {
+interface Mwwm<VM : BaseViewModel<*, *>> {
     val viewModel: VM
     fun VM.observeViewModel()
 }

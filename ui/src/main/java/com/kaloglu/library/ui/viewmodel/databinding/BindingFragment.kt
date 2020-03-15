@@ -15,7 +15,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-abstract class BindingFragment<VDB : ViewDataBinding, VM : BindableViewModel<*>>
+abstract class BindingFragment<VDB : ViewDataBinding, VM : BindableViewModel<*, *>>
 @ContentView constructor(
     @LayoutRes override val resourceLayoutId: Int = 0
 ) : ViewModelFragment<VM>(), DataBinding<VDB> {

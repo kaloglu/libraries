@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.interfaces.Repository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.ObsoleteCoroutinesApi
 
 @ObsoleteCoroutinesApi
@@ -13,6 +14,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 open class BaseViewModelFactory<A : BaseApplication>(val application: A) :
     ViewModelProvider.AndroidViewModelFactory(application) {
 
+    @FlowPreview
     @Suppress("UNCHECKED_CAST")
     override fun <VM : ViewModel?> create(modelClass: Class<VM>) =
         when {
@@ -31,6 +33,7 @@ open class RepositoryViewModelFactory<A : BaseApplication>(
     val repository: Repository<*>
 ) : ViewModelProvider.AndroidViewModelFactory(application) {
 
+    @FlowPreview
     @Suppress("UNCHECKED_CAST")
     override fun <VM : ViewModel?> create(modelClass: Class<VM>) =
         when {

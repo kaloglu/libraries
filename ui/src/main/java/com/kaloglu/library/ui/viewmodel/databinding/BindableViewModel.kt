@@ -13,8 +13,8 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
-abstract class BindableViewModel<S : State>(application: BaseApplication) :
-    BaseViewModel<S>(application), Observable, BindableField {
+abstract class BindableViewModel<M : Any, S : State>(application: BaseApplication) :
+    BaseViewModel<M, S>(application), Observable, BindableField {
 
     @Transient
     private var mCallbacks: PropertyChangeRegistry? = null

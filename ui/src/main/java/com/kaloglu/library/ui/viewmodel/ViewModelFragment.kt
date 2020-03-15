@@ -12,7 +12,7 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-abstract class ViewModelFragment<VM : BaseViewModel<*>>(
+abstract class ViewModelFragment<VM : BaseViewModel<*, *>>(
     @LayoutRes override val resourceLayoutId: Int = 0
 ) : BaseFragment(resourceLayoutId), Mwwm<VM> {
 

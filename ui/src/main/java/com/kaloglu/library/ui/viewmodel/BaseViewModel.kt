@@ -7,22 +7,16 @@ import androidx.lifecycle.MutableLiveData
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.utils.Resource
 import com.kaloglu.library.ui.viewmodel.states.State
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
 @Suppress("UNCHECKED_CAST")
 @FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
-abstract class BaseViewModel<M, S : State>(application: BaseApplication) :
+abstract class BaseViewModel<M : Any, S : State>(application: BaseApplication) :
     AndroidViewModel(application), CoroutineScope {
 
     override val coroutineContext: CoroutineContext by lazy { Job() + Dispatchers.Main }
@@ -73,14 +67,11 @@ abstract class BaseViewModel<M, S : State>(application: BaseApplication) :
         _state.postValue(state)
     }
 
-    @CallSuper
-    abstract fun Resource.Loading.onDataLoading()
+    abstract fun onDataLoading()
 
-    @CallSuper
-    abstract fun Resource.Success<M>.onDataSuccess()
+    abstract fun onDataSuccess()
 
-    @CallSuper
-    abstract fun Resource.Failure.onDataFailure()
+    abstract fun onDataFailure()
 
     abstract fun onInitState()
 

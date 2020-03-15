@@ -11,5 +11,5 @@ import kotlinx.coroutines.ObsoleteCoroutinesApi
 @FlowPreview
 @ExperimentalCoroutinesApi
 @ObsoleteCoroutinesApi
-abstract class RecyclerViewModel<S : State>(application: BaseApplication) :
-    BaseViewModel<S>(application), RecyclerItem
+abstract class RecyclerViewModel<M : Any, S : State>(application: BaseApplication) :
+    BaseViewModel<M, S>(application), RecyclerItem
