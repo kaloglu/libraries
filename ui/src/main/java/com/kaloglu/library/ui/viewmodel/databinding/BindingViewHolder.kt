@@ -6,7 +6,7 @@ import com.kaloglu.library.ui.BaseViewHolder
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBindingViewHolder
 import com.kaloglu.library.ui.viewmodel.databinding.model.RecyclerBindableViewModel
 
-class BindingViewHolder<RBVM : RecyclerBindableViewModel<*>>(private val binding: ViewDataBinding) :
+class BindingViewHolder<RBVM : RecyclerBindableViewModel<*,*>>(private val binding: ViewDataBinding) :
     BaseViewHolder<RBVM>(binding.root), DataBindingViewHolder<RBVM> {
 
     @CallSuper

@@ -1,22 +1,24 @@
 package com.kaloglu.library.ui.utils
 
 import com.kaloglu.library.ui.models.ErrorModel
+import com.kaloglu.library.ui.viewmodel.states.State
 
-sealed class Resource<out T> {
-    open val body: T? = null
-    open val error: ErrorModel? = null
-    open val isLoading: Boolean = false
+sealed class Resource<T> : State.DataState {
+    open val data: T? = null
 
-    data class Success<out T>(override val body: T) : Resource<T>()
-    data class Failure(
-        override val error: ErrorModel = ErrorModel(
-            Constants.UNKNOWN_ERROR_CODE,
-            Constants.UNKNOWN_ERROR
-        )
-    ) : Resource<Nothing>()
+    class Success<T>(override val data: T) : Resource<T>(), State.DataState.Success
+    class Failure<T>(override val error: ErrorModel) : Resource<T>(), State.DataState.Error
+    class Loading<T> : Resource<T>(), State.DataState.Loading
 
-    class Loading : Resource<Nothing>()
-    class NoInternet : Resource<Nothing>()
-    class Cancelled : Resource<Nothing>()
-    class TimeOut : Resource<Nothing>()
+    fun handleResult(
+        successBlock: Success<T>.() -> Unit = {},
+        failureBlock: Failure<T>.() -> Unit = {},
+        loadingBlock: Loading<T>.() -> Unit = {}
+    ) {
+        when (this) {
+            is Success -> successBlock()
+            is Failure -> failureBlock()
+            is Loading -> loadingBlock()
+        }
+    }
 }

@@ -5,9 +5,6 @@ import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.states.State
 
-abstract class RecyclerViewModel<S : State>(application: BaseApplication) :
-    BaseViewModel<S>(application), RecyclerItem {
-
-//    override val parent: RecyclerViewModel? = null
-
-}
+abstract class RecyclerViewModel<M, S>(application: BaseApplication) :
+    BaseViewModel<M, S>(application), RecyclerItem
+        where M : Any, S : State

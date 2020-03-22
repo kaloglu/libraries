@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import com.kaloglu.library.ui.BaseRecyclerAdapter
 import com.kaloglu.library.ui.viewmodel.databinding.model.RecyclerBindableViewModel
 
-abstract class DataBindingRecyclerAdapter<RBVM : RecyclerBindableViewModel<*>>
+abstract class DataBindingRecyclerAdapter<RBVM : RecyclerBindableViewModel<*,*>>
     : BaseRecyclerAdapter<RBVM, BindingViewHolder<RBVM>>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

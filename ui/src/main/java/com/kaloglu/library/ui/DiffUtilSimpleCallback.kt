@@ -22,7 +22,7 @@ constructor(
 open class DiffItemSimpleCallback<M : BaseModel> : DiffUtil.ItemCallback<M>() {
 
     override fun areItemsTheSame(oldItem: M, newItem: M) =
-        oldItem.getId<Any>() == newItem.getId()
+        oldItem.getID<Any>() == newItem.getID()
 
     override fun areContentsTheSame(oldItem: M, newItem: M) =
         oldItem.equals(newItem)

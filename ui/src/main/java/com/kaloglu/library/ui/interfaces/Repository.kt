@@ -1,11 +1,11 @@
 package com.kaloglu.library.ui.interfaces
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.kaloglu.library.ui.BaseModel
-import com.kaloglu.library.ui.utils.Resource
 
-interface Repository<E : BaseModel> {
+interface Repository<E : BaseModel> : LifecycleObserver {
 
     fun insert(entity: E)
 
@@ -13,11 +13,14 @@ interface Repository<E : BaseModel> {
 
     fun update(entity: E)
 
-    fun get(): LiveData<Resource<E>>
+    val data: LiveData<List<E>>
 
-    val result: MutableLiveData<Resource<E>>
+    fun addLifecycle(lifecycle: Lifecycle) = lifecycle.addObserver(this)
+    fun removeLifecycle(lifecycle: Lifecycle) = lifecycle.removeObserver(this)
 
-    fun asyncFinished(resource: Resource<E>?) {
-        result.value = resource
+    fun registerLifecycle(lifecycle: Lifecycle) {
+        removeLifecycle(lifecycle)
+        addLifecycle(lifecycle)
     }
+
 }

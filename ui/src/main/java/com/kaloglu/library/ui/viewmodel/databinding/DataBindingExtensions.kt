@@ -21,7 +21,7 @@ import androidx.databinding.ViewDataBinding
  * @return ViewDataBinding
  *
  * */
-fun <VDB : ViewDataBinding> LayoutInflater.inflateViewHolderBinding(
+fun <VDB : ViewDataBinding> LayoutInflater.inflateViewBinding(
     container: ViewGroup?,
     @LayoutRes layoutId: Int,
     onInflate: VDB.() -> Unit

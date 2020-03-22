@@ -6,13 +6,11 @@ import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.viewmodel.databinding.BindableViewModel
 import com.kaloglu.library.ui.viewmodel.states.State
 
-abstract class RecyclerBindableViewModel<S : State>(application: BaseApplication) :
-    BindableViewModel<S>(application), RecyclerItem {
+abstract class RecyclerBindableViewModel<M, S>(application: BaseApplication) :
+    BindableViewModel<M, S>(application), RecyclerItem
+        where M : Any, S : State {
 
     @get:Bindable
     abstract override var layoutId: Int
-
-//    @get:Bindable
-//    override val parent: RecyclerBindableViewModel? = null
 
 }

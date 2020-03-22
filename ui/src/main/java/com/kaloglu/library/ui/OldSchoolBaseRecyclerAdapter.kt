@@ -25,7 +25,7 @@ abstract class OldSchoolBaseRecyclerAdapter<RI : RecyclerItem, VH : BaseViewHold
 
     override fun getItemCount() = items.size
 
-    protected open fun <T : Any> compareId(o: RI, n: RI) = o.getId<T>() == n.getId<T>()
+    protected open fun <T : Any> compareId(o: RI, n: RI) = o.getID<T>() == n.getID<T>()
 
     /*class Seperator(
         override var parent: RecyclerItem,
