@@ -7,13 +7,13 @@ sealed class Resource<T> : State.DataState {
     open val data: T? = null
 
     class Success<T>(override val data: T) : Resource<T>(), State.DataState.Success
-    class Failure(override val error: ErrorModel) : Resource<Nothing>(), State.DataState.Error
-    object Loading : Resource<Nothing>(), State.DataState.Loading
+    class Failure<T>(override val error: ErrorModel) : Resource<T>(), State.DataState.Error
+    class Loading<T> : Resource<T>(), State.DataState.Loading
 
     fun handleResult(
         successBlock: Success<T>.() -> Unit = {},
-        failureBlock: Failure.() -> Unit = {},
-        loadingBlock: Loading.() -> Unit = {}
+        failureBlock: Failure<T>.() -> Unit = {},
+        loadingBlock: Loading<T>.() -> Unit = {}
     ) {
         when (this) {
             is Success -> successBlock()

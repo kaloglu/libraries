@@ -2,7 +2,6 @@ package com.kaloglu.library.ui.viewmodel
 
 import androidx.annotation.CallSuper
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.utils.Resource
@@ -12,21 +11,23 @@ import kotlinx.coroutines.channels.ConflatedBroadcastChannel
 import kotlinx.coroutines.channels.consumeEach
 import kotlin.coroutines.CoroutineContext
 
-@Suppress("UNCHECKED_CAST")
+@Suppress("MemberVisibilityCanBePrivate")
 @FlowPreview
 @ObsoleteCoroutinesApi
 @ExperimentalCoroutinesApi
 abstract class BaseViewModel<M : Any, S : State>(application: BaseApplication) :
     AndroidViewModel(application), CoroutineScope {
 
-    override val coroutineContext: CoroutineContext by lazy { Job() + Dispatchers.Main }
+    val job = Job()
 
-    private val _state = MutableLiveData<S>()
+    override val coroutineContext: CoroutineContext
+    get() = job + Dispatchers.Main
 
-    val state: LiveData<S> = _state
+    val stateLiveData = MutableLiveData<S>()
 
-    protected abstract val resultChannel: ConflatedBroadcastChannel<Resource<M>>
-    protected abstract val eventChannel: ConflatedBroadcastChannel<S>
+    val resultChannel=  ConflatedBroadcastChannel<Resource<M>>()
+    val eventChannel = ConflatedBroadcastChannel<S>()
+    val stateChannel = ConflatedBroadcastChannel<S>()
 
     @CallSuper
     override fun onCleared() {
@@ -37,18 +38,27 @@ abstract class BaseViewModel<M : Any, S : State>(application: BaseApplication) :
     @CallSuper
     open fun onAttachViewModel() {
         launch {
-            resultChannel.consumeEach(this@BaseViewModel::handleResult)
-            eventChannel.consumeEach(this@BaseViewModel::onEvent)
+            resultChannel.consumeEach {
+                this@BaseViewModel.handleResult(it)
+            }
+            eventChannel.consumeEach {
+                this@BaseViewModel.onEvent(it)
+            }
+            stateChannel.consumeEach {
+                this@BaseViewModel.onStateChannel(it)
+            }
         }
 
-        _state.observeForever(this::onState)
+        stateLiveData.observeForever {
+            this.onState(it)
+        }
     }
 
     open fun handleResult(resource: Resource<M>) {
         resource.handleResult(
-            successBlock = { onDataSuccess() },
-            failureBlock = { onDataFailure() },
-            loadingBlock = { onDataLoading() }
+            successBlock = { onDataSuccess(this) },
+            failureBlock = { onDataFailure(this) },
+            loadingBlock = { onDataLoading(this) }
         )
     }
 
@@ -61,18 +71,25 @@ abstract class BaseViewModel<M : Any, S : State>(application: BaseApplication) :
         }
     }
 
-    @Suppress("MemberVisible")
     @CallSuper
-    open fun postState(state: S) {
-        _state.postValue(state)
+    open fun onStateChannel(state: S) {
+        when (state) {
+            is State.UiState.Init -> onInitState()
+        }
     }
 
-    abstract fun onDataLoading()
-
-    abstract fun onDataSuccess()
-
-    abstract fun onDataFailure()
+    @CallSuper
+    open fun postState(state: S) {
+        stateLiveData.postValue(state)
+        stateChannel.offer(state)
+    }
 
     abstract fun onInitState()
+
+    abstract fun onDataLoading(loading: Resource.Loading<M>)
+
+    abstract fun onDataSuccess(success: Resource.Success<M>)
+
+    abstract fun onDataFailure(failure: Resource.Failure<M>)
 
 }
