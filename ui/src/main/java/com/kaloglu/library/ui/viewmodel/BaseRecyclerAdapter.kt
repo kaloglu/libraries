@@ -5,13 +5,7 @@ import android.view.ViewGroup
 import com.kaloglu.library.ui.BaseRecyclerAdapter
 import com.kaloglu.library.ui.BaseViewHolder
 import com.kaloglu.library.ui.viewmodel.model.RecyclerViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.ObsoleteCoroutinesApi
 
-@FlowPreview
-@ObsoleteCoroutinesApi
-@ExperimentalCoroutinesApi
 abstract class BaseRecyclerAdapter<RVM : RecyclerViewModel<*, *>, VH : BaseViewHolder<RVM>> :
     BaseRecyclerAdapter<RVM, VH>() {
 

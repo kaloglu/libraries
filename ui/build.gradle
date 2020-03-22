@@ -46,7 +46,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
@@ -61,8 +61,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
     // ktx
     implementation "androidx.collection:collection-ktx:1.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.2"
+    implementation "androidx.fragment:fragment-ktx:1.2.3"
 
     // Coroutines
-    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
+//    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 }

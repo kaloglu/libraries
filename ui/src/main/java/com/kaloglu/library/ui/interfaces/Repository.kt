@@ -7,11 +7,11 @@ import com.kaloglu.library.ui.BaseModel
 
 interface Repository<E : BaseModel> : LifecycleObserver {
 
-    suspend fun insert(entity: E)
+    fun insert(entity: E)
 
-    suspend fun delete(entity: E)
+    fun delete(entity: E)
 
-    suspend fun update(entity: E)
+    fun update(entity: E)
 
     val data: LiveData<List<E>>
 
