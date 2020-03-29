@@ -4,11 +4,12 @@ import androidx.databinding.PropertyChangeRegistry
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.BindableField
-import com.kaloglu.library.ui.viewmodel.states.State
+import com.kaloglu.library.ui.viewmodel.mvi.Event
+import com.kaloglu.library.ui.viewmodel.mvi.State
 
-abstract class BindableViewModel<M, S>(application: BaseApplication) :
-    BaseViewModel<M, S>(application), BindableField
-        where M : Any, S : State {
+abstract class BindableViewModel<E, S>(application: BaseApplication) :
+    BaseViewModel<E, S>(application), BindableField
+        where E : Event, S : State {
 
     @Transient
     override var mCallbacks: PropertyChangeRegistry? = null

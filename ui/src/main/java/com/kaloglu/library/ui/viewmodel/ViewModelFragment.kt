@@ -5,11 +5,11 @@ import androidx.annotation.LayoutRes
 import androidx.lifecycle.Observer
 import com.kaloglu.library.ui.BaseFragment
 import com.kaloglu.library.ui.viewmodel.interfaces.Mwwm
-import com.kaloglu.library.ui.viewmodel.states.State
+import com.kaloglu.library.ui.viewmodel.mvi.State
 
-abstract class ViewModelFragment<VM : BaseViewModel<*, *>>(
-    @LayoutRes override val resourceLayoutId: Int = 0
-) : BaseFragment(resourceLayoutId), Mwwm<VM> {
+abstract class ViewModelFragment<VM>(@LayoutRes override val resourceLayoutId: Int = 0) :
+    BaseFragment(resourceLayoutId), Mwwm<VM>
+        where  VM : BaseViewModel<*, *> {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -18,28 +18,29 @@ abstract class ViewModelFragment<VM : BaseViewModel<*, *>>(
 
     override fun observeViewModel() {
         with(viewModel) {
-            stateMediatorLiveData.observe(viewLifecycleOwner, Observer {
+            stateLiveData.observe(viewLifecycleOwner, Observer {
                 when (it) {
-                    is State.UiState.Done -> onUiStateSuccess(it)
-                    is State.UiState.Error -> onUiStateFailure(it)
-                    is State.UiState.Empty -> onUiStateEmpty(it)
-                    is State.UiState.Loading -> onUiStateLoading(it)
-                    is State.UiState.Init -> onUiStateInit(it)
-                    is State.UiState.CustomUi -> onUiStateCustom(it)
+                    is State.Done -> onStateSuccess(it)
+                    is State.Error -> onStateFailure(it)
+                    is State.Empty -> onStateEmpty(it)
+                    is State.Loading -> onStateLoading(it)
+                    is State.Init -> onStateInit(it)
+                    is State.Custom -> onStateCustom(it)
                 }
             })
         }
     }
 
-    protected open fun onUiStateInit(state: State.UiState.Init) = Unit
+    protected open fun onStateInit(state: State.Init) = showToast(state::class.java.simpleName)
 
-    protected open fun onUiStateLoading(state: State.UiState.Loading) = Unit
+    protected open fun onStateLoading(state: State.Loading) = showToast(state::class.java.simpleName)
 
-    protected open fun onUiStateSuccess(state: State.UiState.Done) = Unit
+    protected open fun onStateSuccess(state: State.Done) = showToast(state::class.java.simpleName)
 
-    protected open fun onUiStateEmpty(state: State.UiState.Empty) = Unit
+    protected open fun onStateEmpty(state: State.Empty) = showToast(state::class.java.simpleName)
 
-    protected open fun onUiStateFailure(state: State.UiState.Error) = Unit
+    protected open fun onStateFailure(state: State.Error) = showToast(state.error.message)
 
-    protected open fun onUiStateCustom(state: State.UiState.CustomUi) = Unit
+    protected open fun onStateCustom(state: State.Custom) = showToast(state::class.java.simpleName)
+
 }

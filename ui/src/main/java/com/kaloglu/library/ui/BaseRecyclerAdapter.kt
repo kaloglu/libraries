@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
 
-abstract class BaseRecyclerAdapter<RI : RecyclerItem, VH : BaseViewHolder<RI>> :
-    ListAdapter<RI, VH>(
-        AsyncDifferConfig.Builder<RI>(DiffItemSimpleCallback<RI>()).build()
-    ), ClickableRecyclerItemAdapter<RI> {
+abstract class BaseRecyclerAdapter<RI, VH> :
+    ListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(DiffItemSimpleCallback<RI>()).build()),
+    ClickableRecyclerItemAdapter<RI>
+        where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 
     override var onItemClick: ((RI, Int) -> Unit)? = null
     override var onViewClick: ((RI, View, Int) -> Unit)? = null

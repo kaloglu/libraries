@@ -8,9 +8,9 @@ import com.kaloglu.library.ui.viewmodel.model.RecyclerViewModel
 import kotlinx.android.extensions.LayoutContainer
 import com.kaloglu.library.ui.BaseViewHolder as BaseVH
 
-abstract class BaseViewHolder<RVM : RecyclerViewModel<*,*>>(override val containerView: View) :
-    RecyclerView.ViewHolder(containerView),
-    LayoutContainer, ClickableRecyclerItem<RVM>, ViewHolder<RVM> {
+abstract class BaseViewHolder<RVM> constructor(override val containerView: View) :
+    RecyclerView.ViewHolder(containerView), LayoutContainer, ClickableRecyclerItem<RVM>, ViewHolder<RVM>
+        where RVM : RecyclerViewModel<*, *> {
 
     override var onViewClick: ((RVM, View, Int) -> Unit)? = null
 

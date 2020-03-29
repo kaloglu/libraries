@@ -6,9 +6,11 @@ import com.kaloglu.library.ui.interfaces.ClickableRecyclerItem
 import com.kaloglu.library.ui.interfaces.ViewHolder
 import kotlinx.android.extensions.LayoutContainer
 
-abstract class BaseViewHolder<RI : RecyclerItem>(override val containerView: View) :
+abstract class BaseViewHolder<RI>(override val containerView: View) :
     RecyclerView.ViewHolder(containerView),
-    LayoutContainer, ClickableRecyclerItem<RI>, ViewHolder<RI> {
+    LayoutContainer, ClickableRecyclerItem<RI>,
+    ViewHolder<RI>
+        where RI : RecyclerItem {
 
     override var onViewClick: ((RI, View, Int) -> Unit)? = null
 

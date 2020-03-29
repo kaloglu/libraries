@@ -1,45 +1,45 @@
 package com.kaloglu.library.ui.viewmodel
 
+import android.util.Log
 import androidx.annotation.CallSuper
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.kaloglu.library.ui.BaseApplication
-import com.kaloglu.library.ui.viewmodel.states.State
+import com.kaloglu.library.ui.viewmodel.mvi.Event
+import com.kaloglu.library.ui.viewmodel.mvi.State
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class BaseViewModel<M, S>(application: BaseApplication) : AndroidViewModel(application)
-        where M : Any, S : State {
+abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewModel(application)
+        where E : Event, S : State {
 
-    val stateMediatorLiveData = MediatorLiveData<S>()
+    val stateLiveData = MediatorLiveData<S>()
 
-    private val _stateLiveData = MutableLiveData<S>()
+    private val eventLiveData = MutableLiveData<E>()
+
+    init {
+        stateLiveData.addSource(eventLiveData, ::onEvent)
+        Log.e("VIEWMODEL", "INIT!")
+    }
 
     @CallSuper
-    open fun onAttachViewModel() {
-        stateMediatorLiveData.addSource(_stateLiveData) {
-            this.onState(it)
-            stateMediatorLiveData::postValue
+    open fun postEvent(event: E) = eventLiveData.postValue(event)
+
+    @CallSuper
+    protected open fun onEvent(event: E) {
+        when (event) {
+            is Event.Init -> onInit()
+            else -> {
+            }
         }
     }
 
-    @CallSuper
-    open fun onUiState(state: S) = when (state) {
-        is State.UiState.Init -> onInitState()
-        else -> {
+    protected fun <T> LiveData<T>.mapToEvent(onChanged: (T?) -> E) {
+        stateLiveData.addSource(this) {
+            postEvent(onChanged(it))
         }
     }
 
-    @CallSuper
-    open fun postState(state: S) {
-        _stateLiveData.postValue(state)
-    }
+    fun postState(state: S) = stateLiveData.postValue(state)
 
-    fun onState(state: S) = when (state) {
-        is State.UiState -> onUiState(state)
-        else -> throw IllegalArgumentException("Unhandled State types ${state.javaClass.simpleName}")
-    }
-
-    abstract fun onInitState()
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    abstract fun onInit()
 }

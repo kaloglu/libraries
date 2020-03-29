@@ -2,12 +2,13 @@ package com.kaloglu.library.ui
 
 import androidx.recyclerview.widget.DiffUtil
 
-open class DiffUtilSimpleCallback<M : BaseModel>
+open class DiffUtilSimpleCallback<M>
 constructor(
     private val compare: (M, M) -> Boolean,
     private val old: List<M>,
     private val new: List<M>
-) : DiffUtil.Callback() {
+) : DiffUtil.Callback()
+        where M : BaseModel {
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int) =
         compare(old[oldItemPosition], new[newItemPosition])
 
