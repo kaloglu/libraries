@@ -4,5 +4,5 @@ import com.kaloglu.library.ui.viewmodel.BaseViewModel
 
 interface Mwwm<VM : BaseViewModel<*, *>> {
     val viewModel: VM
-    fun VM.observeViewModel()
+    fun observeViewModel()
 }
