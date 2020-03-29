@@ -1,66 +1,45 @@
 package com.kaloglu.library.ui.viewmodel
 
+import android.util.Log
 import androidx.annotation.CallSuper
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.*
 import com.kaloglu.library.ui.BaseApplication
-import com.kaloglu.library.ui.utils.Resource
-import com.kaloglu.library.ui.viewmodel.states.State
+import com.kaloglu.library.ui.viewmodel.mvi.Event
+import com.kaloglu.library.ui.viewmodel.mvi.State
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class BaseViewModel<M, S>(application: BaseApplication) :
-    AndroidViewModel(application)
-        where M : Any, S : State {
+abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewModel(application)
+        where E : Event, S : State {
 
-    val stateLiveData: LiveData<S>
-        get() = _stateLiveData
+    val stateLiveData = MediatorLiveData<S>()
 
-    private val _stateLiveData = MutableLiveData<S>()
+    private val eventLiveData = MutableLiveData<E>()
 
-    val stateMediatorLiveData = MediatorLiveData<S>()
-
-    @CallSuper
-    open fun onAttachViewModel() {
-        stateMediatorLiveData.addSource(_stateLiveData) {
-            this.onState(it)
-        }
-    }
-
-    open fun handleResult(resource: Resource<M>) {
-        resource.handleResult(
-            successBlock = { onDataSuccess(this) },
-            failureBlock = { onDataFailure(this) },
-            loadingBlock = { onDataLoading(this) }
-        )
-    }
-
-    fun onState(state: S) {
-        when (state) {
-            is State.UiState -> onUiState(state)
-            else -> throw IllegalArgumentException("Unhandled State types ${state.javaClass.simpleName}")
-        }
+    init {
+        stateLiveData.addSource(eventLiveData, ::onEvent)
+        Log.e("VIEWMODEL", "INIT!")
     }
 
     @CallSuper
-    open fun onUiState(state: S) {
-        when (state) {
-            is State.UiState.Init -> onInitState()
+    open fun postEvent(event: E) = eventLiveData.postValue(event)
+
+    @CallSuper
+    protected open fun onEvent(event: E) {
+        when (event) {
+            is Event.Init -> onInit()
+            else -> {
+            }
         }
     }
 
-    @CallSuper
-    open fun postState(state: S) {
-        _stateLiveData.postValue(state)
+    protected fun <T> LiveData<T>.mapToEvent(onChanged: (T?) -> E) {
+        stateLiveData.addSource(this) {
+            postEvent(onChanged(it))
+        }
     }
 
-    abstract fun onInitState()
+    fun postState(state: S) = stateLiveData.postValue(state)
 
-    open fun onDataLoading(loading: Resource.Loading<M>) = Unit
-
-    open fun onDataSuccess(success: Resource.Success<M>) = Unit
-
-    open fun onDataFailure(failure: Resource.Failure<M>) = Unit
-
+    @OnLifecycleEvent(Lifecycle.Event.ON_START)
+    abstract fun onInit()
 }

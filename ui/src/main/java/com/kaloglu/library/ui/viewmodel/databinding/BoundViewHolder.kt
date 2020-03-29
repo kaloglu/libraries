@@ -3,11 +3,13 @@ package com.kaloglu.library.ui.viewmodel.databinding
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.ui.BaseViewHolder
-import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBindingViewHolder
+import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBoundViewHolder
 import com.kaloglu.library.ui.viewmodel.databinding.model.RecyclerBindableViewModel
 
-class BindingViewHolder<RBVM : RecyclerBindableViewModel<*,*>>(private val binding: ViewDataBinding) :
-    BaseViewHolder<RBVM>(binding.root), DataBindingViewHolder<RBVM> {
+class BoundViewHolder<RBVM>
+constructor(private val binding: ViewDataBinding) :
+    BaseViewHolder<RBVM>(binding.root), DataBoundViewHolder<RBVM>
+        where RBVM : RecyclerBindableViewModel<*, *> {
 
     @CallSuper
     override fun bindVariables(item: RBVM) {

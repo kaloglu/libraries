@@ -5,8 +5,8 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.ui.viewmodel.ViewModelActivity
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
 
-abstract class BindingActivity<VDB : ViewDataBinding, VM : BindableViewModel<*,*>>
-    : ViewModelActivity<VM>(), DataBinding<VDB> {
+abstract class BindingActivity<VDB, VM> : ViewModelActivity<VM>(), DataBinding<VDB>
+        where VM : BindableViewModel<*, *>, VDB : ViewDataBinding {
 
     internal open fun VDB.viewOnBind() = Unit
 

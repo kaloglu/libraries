@@ -4,13 +4,13 @@ import android.view.ViewGroup
 import com.kaloglu.library.ui.BaseRecyclerAdapter
 import com.kaloglu.library.ui.viewmodel.databinding.model.RecyclerBindableViewModel
 
-abstract class DataBindingRecyclerAdapter<RBVM : RecyclerBindableViewModel<*,*>>
-    : BaseRecyclerAdapter<RBVM, BindingViewHolder<RBVM>>() {
+abstract class DataBoundRecyclerAdapter<RBVM> : BaseRecyclerAdapter<RBVM, BoundViewHolder<RBVM>>()
+        where RBVM : RecyclerBindableViewModel<*, *> {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BindingViewHolder<RBVM>(parent.inflateViewHolderBinding(viewType))
+        BoundViewHolder<RBVM>(parent.inflateViewHolderBinding(viewType))
 
-    override fun onBindViewHolder(holder: BindingViewHolder<RBVM>, position: Int) =
+    override fun onBindViewHolder(holder: BoundViewHolder<RBVM>, position: Int) =
         holder.bindVariables(getItem(position))
 
 }

@@ -6,8 +6,9 @@ import com.kaloglu.library.ui.BaseRecyclerAdapter
 import com.kaloglu.library.ui.BaseViewHolder
 import com.kaloglu.library.ui.viewmodel.model.RecyclerViewModel
 
-abstract class BaseRecyclerAdapter<RVM : RecyclerViewModel<*, *>, VH : BaseViewHolder<RVM>> :
-    BaseRecyclerAdapter<RVM, VH>() {
+abstract class BaseRecyclerAdapter<RVM, VH> :
+    BaseRecyclerAdapter<RVM, VH>()
+        where RVM : RecyclerViewModel<*, *>, VH : BaseViewHolder<RVM> {
 
     override var onItemClick: ((RVM, Int) -> Unit)? = null
     override var onViewClick: ((RVM, View, Int) -> Unit)? = null

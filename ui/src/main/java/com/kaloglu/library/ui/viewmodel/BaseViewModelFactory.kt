@@ -6,8 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.kaloglu.library.ui.BaseApplication
 
 @Suppress("MemberVisibilityCanBePrivate")
-open class BaseViewModelFactory<A : BaseApplication>(val application: A, val lifecycle: Lifecycle) :
-    ViewModelProvider.AndroidViewModelFactory(application) {
+open class BaseViewModelFactory<A>(val application: A, val lifecycle: Lifecycle) :
+    ViewModelProvider.AndroidViewModelFactory(application)
+        where A : BaseApplication {
 
     @Suppress("UNCHECKED_CAST")
     override fun <VM : ViewModel?> create(modelClass: Class<VM>) =

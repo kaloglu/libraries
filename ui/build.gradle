@@ -9,12 +9,11 @@ group = "com.github.kaloglu"
 android {
     compileSdkVersion 29
 
-
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 100
-        versionName "1.0.0-Beta1"
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -63,6 +62,4 @@ dependencies {
     implementation "androidx.collection:collection-ktx:1.1.0"
     implementation "androidx.fragment:fragment-ktx:1.2.3"
 
-    // Coroutines
-//    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines"
 }

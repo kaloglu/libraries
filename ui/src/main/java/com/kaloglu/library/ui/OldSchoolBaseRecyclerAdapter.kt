@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
 import kotlin.properties.Delegates
 
-abstract class OldSchoolBaseRecyclerAdapter<RI : RecyclerItem, VH : BaseViewHolder<RI>>
-    : RecyclerView.Adapter<VH>(), DiffAdapter, ClickableRecyclerItemAdapter<RI> {
+abstract class OldSchoolBaseRecyclerAdapter<RI, VH>
+    : RecyclerView.Adapter<VH>(), DiffAdapter, ClickableRecyclerItemAdapter<RI>
+        where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 
     override var onItemClick: ((RI, Int) -> Unit)? = null
     override var onViewClick: ((RI, View, Int) -> Unit)? = null
