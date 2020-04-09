@@ -1,4 +1,4 @@
-package com.kaloglu.library.ui.viewmodel.databinding
+package com.kaloglu.library.ui.viewmodel.databinding.dialogFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,12 +6,14 @@ import android.view.ViewGroup
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
-import com.kaloglu.library.ui.viewmodel.ViewModelFragment
-import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBinding
+import com.kaloglu.library.ui.viewmodel.databinding.BindableViewModel
+import com.kaloglu.library.ui.viewmodel.databinding.inflateViewBinding
+import com.kaloglu.library.ui.viewmodel.databinding.interfaces.DataBindingDialog
+import com.kaloglu.library.ui.viewmodel.dialogFragments.ViewModelDialogFragment
 
-abstract class BindingFragment<VDB, VM> @ContentView
+abstract class BindingDialogFragment<VDB, VM> @ContentView
 constructor(@LayoutRes override val resourceLayoutId: Int = 0) :
-    ViewModelFragment<VM>(), DataBinding<VDB, VM>
+    ViewModelDialogFragment<VM>(), DataBindingDialog<VDB, VM>
         where VDB : ViewDataBinding, VM : BindableViewModel<*, *> {
 
     override lateinit var viewDataBinding: VDB
@@ -26,3 +28,4 @@ constructor(@LayoutRes override val resourceLayoutId: Int = 0) :
     }.root
 
 }
+

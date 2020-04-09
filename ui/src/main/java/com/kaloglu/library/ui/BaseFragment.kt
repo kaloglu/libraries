@@ -2,7 +2,6 @@ package com.kaloglu.library.ui
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
@@ -24,13 +23,5 @@ abstract class BaseFragment @ContentView constructor(
         super.onViewCreated(view, savedInstanceState)
         initUserInterface(savedInstanceState)
     }
-
-    protected open fun showToast(message: String) = Toast
-        .makeText(
-            context,
-            this::class.java.simpleName + " : $message",
-            Toast.LENGTH_SHORT
-        )
-        .show()
 
 }
