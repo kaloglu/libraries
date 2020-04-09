@@ -18,10 +18,9 @@ abstract class BaseDialogFragment @ContentView constructor(
 
     override val activity by lazy { getActivity() as BaseActivity }
     override val application by lazy { activity.application }
-    override val fragmentTag = this.javaClass.simpleName
     override val dialogTitle: String? = null
 
-    final override fun initUserInterface(savedInstanceState: Bundle?) {
+    override fun initUserInterface(savedInstanceState: Bundle?) {
         dialog?.let {
             it.setOnShowListener {
                 dialogTitle?.let { dialog?.setTitle(it) }

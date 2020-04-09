@@ -9,7 +9,8 @@ import kotlinx.android.extensions.LayoutContainer
 interface ViewLifecycle : LayoutContainer {
     val application: BaseApplication
     val activity: BaseActivity
-    val fragmentTag: String
+    val viewTag: String
+        get() = this.javaClass.simpleName
 
     fun initUserInterface(savedInstanceState: Bundle?)
 

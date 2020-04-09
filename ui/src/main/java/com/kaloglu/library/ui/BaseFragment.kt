@@ -16,7 +16,7 @@ abstract class BaseFragment @ContentView constructor(
     override val activity by lazy { getActivity() as BaseActivity }
     override val application by lazy { activity.application }
 
-    override val fragmentTag = this.javaClass.simpleName
+    override val viewTag by lazy { this.javaClass.simpleName }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         containerView = view
