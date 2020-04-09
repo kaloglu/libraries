@@ -14,7 +14,7 @@ abstract class BaseDialogFragment @ContentView constructor(
         @LayoutRes internal open val resourceLayoutId: Int = 0
 ) : DialogFragment(), DialogFragmentLifecycle {
 
-    override lateinit var fragmentView: View
+    override lateinit var containerView: View
 
     override val activity by lazy { getActivity() as BaseActivity }
     override val application by lazy { activity.application }
@@ -38,7 +38,7 @@ abstract class BaseDialogFragment @ContentView constructor(
             inflater.inflate(resourceLayoutId, parent)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragmentView = view
+        containerView = view
         super.onViewCreated(view, savedInstanceState)
         initUserInterface(savedInstanceState)
     }

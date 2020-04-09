@@ -2,7 +2,7 @@ package com.kaloglu.library.ui.interfaces
 
 import android.app.Dialog
 
-interface DialogFragmentLifecycle : FragmentLifecycle {
+interface DialogFragmentLifecycle : ViewLifecycle {
 
     val dialogTitle: String?
 

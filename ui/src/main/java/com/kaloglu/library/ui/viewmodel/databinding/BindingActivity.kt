@@ -1,5 +1,6 @@
 package com.kaloglu.library.ui.viewmodel.databinding
 
+import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.ui.viewmodel.ViewModelActivity
@@ -10,7 +11,7 @@ abstract class BindingActivity<VDB, VM> : ViewModelActivity<VM>(), DataBinding<V
 
     internal open fun VDB.viewOnBind() = Unit
 
-    override fun initUserInterface() {
+    override fun initUserInterface(savedInstanceState: Bundle?) {
         viewDataBinding = DataBindingUtil.setContentView(this, resourceLayoutId)
         viewDataBinding.setVariable(getBindingVariable(), viewModel)
         viewDataBinding.executePendingBindings()

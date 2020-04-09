@@ -5,13 +5,13 @@ import android.view.View
 import androidx.annotation.ContentView
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
-import com.kaloglu.library.ui.interfaces.FragmentLifecycle
+import com.kaloglu.library.ui.interfaces.ViewLifecycle
 
 abstract class BaseFragment @ContentView constructor(
     @LayoutRes internal open val resourceLayoutId: Int = 0
-) : Fragment(resourceLayoutId), FragmentLifecycle {
+) : Fragment(resourceLayoutId), ViewLifecycle {
 
-    override lateinit var fragmentView: View
+    override lateinit var containerView: View
 
     override val activity by lazy { getActivity() as BaseActivity }
     override val application by lazy { activity.application }
@@ -19,7 +19,7 @@ abstract class BaseFragment @ContentView constructor(
     override val fragmentTag = this.javaClass.simpleName
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        fragmentView = view
+        containerView = view
         super.onViewCreated(view, savedInstanceState)
         initUserInterface(savedInstanceState)
     }

@@ -2,11 +2,11 @@ package com.kaloglu.library.ui.viewmodel.interfaces
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.kaloglu.library.ui.interfaces.FragmentLifecycle
+import com.kaloglu.library.ui.interfaces.ViewLifecycle
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.mvi.State
 
-interface MvvmLifeCycle<VM> : FragmentLifecycle where VM : BaseViewModel<*, *> {
+interface MvvmLifeCycle<VM> : ViewLifecycle where VM : BaseViewModel<*, *> {
     val viewModel: VM
 
     fun observeViewModel(viewLifecycleOwner: LifecycleOwner) {
