@@ -2,7 +2,7 @@ package com.kaloglu.library.ui.interfaces
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.kaloglu.library.ui.BaseModel
 
 interface Repository<E : BaseModel> : LifecycleObserver {
@@ -13,7 +13,7 @@ interface Repository<E : BaseModel> : LifecycleObserver {
 
     fun update(entity: E)
 
-    val data: LiveData<List<E>>
+    val data: MutableLiveData<List<E>>
 
     fun addLifecycle(lifecycle: Lifecycle) = lifecycle.addObserver(this)
     fun removeLifecycle(lifecycle: Lifecycle) = lifecycle.removeObserver(this)
