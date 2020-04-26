@@ -6,7 +6,9 @@ interface Event {
 
     enum class EventType(val value: Int? = 0) {
         INIT(0),
-        DONE(1),
+        SUCCESS(1),
+        EMPTY(2),
+        ERROR(3),
         CUSTOM(null)
     }
 
@@ -23,7 +25,7 @@ interface Event {
 
     interface Done : Event {
         override val type
-            get() = EventType.DONE
+            get() = EventType.SUCCESS
     }
 
 

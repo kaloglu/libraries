@@ -9,6 +9,9 @@ interface State {
         get() = type.value
             ?: throw MissingFormatArgumentException("should override #valueInt on state class for custom states")
 
+    val data: Any?
+        get() = null
+
     val error: ErrorModel?
         get() = null
 
@@ -17,7 +20,7 @@ interface State {
 
     enum class StateType(val value: Int? = 0) {
         EMPTY(300),
-        DONE(200),
+        SUCCESS(200),
         LOADING(100),
         INIT(0),
         ERROR(-100),
@@ -45,9 +48,9 @@ interface State {
             get() = StateType.EMPTY
     }
 
-    interface Done : State {
+    interface Success : State {
         override val type
-            get() = StateType.DONE
+            get() = StateType.SUCCESS
     }
 
     interface Error : State {

@@ -13,7 +13,7 @@ interface MvvmLifeCycle<VM> : ViewLifecycle where VM : BaseViewModel<*, *> {
         with(viewModel) {
             stateLiveData.observe(viewLifecycleOwner, Observer {
                 when (it) {
-                    is State.Done -> onStateSuccess(it)
+                    is State.Success -> onStateSuccess(it)
                     is State.Error -> onStateFailure(it)
                     is State.Empty -> onStateEmpty(it)
                     is State.Loading -> onStateLoading(it)
@@ -28,7 +28,7 @@ interface MvvmLifeCycle<VM> : ViewLifecycle where VM : BaseViewModel<*, *> {
 
     fun onStateLoading(state: State.Loading) = showToast(state::class.java.simpleName)
 
-    fun onStateSuccess(state: State.Done) = showToast(state::class.java.simpleName)
+    fun onStateSuccess(state: State.Success) = showToast(state::class.java.simpleName)
 
     fun onStateEmpty(state: State.Empty) = showToast(state::class.java.simpleName)
 
