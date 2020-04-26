@@ -5,11 +5,11 @@ import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.databinding.interfaces.BindableField
 import com.kaloglu.library.ui.viewmodel.mvi.Event
-import com.kaloglu.library.ui.viewmodel.mvi.State
+import com.kaloglu.library.ui.viewmodel.mvi.Resource
 
-abstract class BindableViewModel<E, S>(application: BaseApplication) :
-    BaseViewModel<E, S>(application), BindableField
-        where E : Event, S : State {
+abstract class BindableViewModel<E, R>(application: BaseApplication) :
+    BaseViewModel<E, R>(application), BindableField
+        where E : Event, R: Resource<*> {
 
     @Transient
     override var mCallbacks: PropertyChangeRegistry? = null

@@ -4,8 +4,8 @@ import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
 import com.kaloglu.library.ui.viewmodel.mvi.Event
-import com.kaloglu.library.ui.viewmodel.mvi.State
+import com.kaloglu.library.ui.viewmodel.mvi.Resource
 
-abstract class RecyclerViewModel<E, S>(application: BaseApplication) :
-    BaseViewModel<E, S>(application), RecyclerItem
-        where E : Event, S : State
+abstract class RecyclerViewModel<E, R>(application: BaseApplication) :
+    BaseViewModel<E, R>(application), RecyclerItem
+        where E : Event, R: Resource<*>

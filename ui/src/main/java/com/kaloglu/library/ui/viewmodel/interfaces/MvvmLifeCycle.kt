@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.kaloglu.library.ui.interfaces.ViewLifecycle
 import com.kaloglu.library.ui.viewmodel.BaseViewModel
-import com.kaloglu.library.ui.viewmodel.mvi.State
+import com.kaloglu.library.ui.viewmodel.mvi.Resource
 
 interface MvvmLifeCycle<VM> : ViewLifecycle where VM : BaseViewModel<*, *> {
     val viewModel: VM
@@ -13,27 +13,27 @@ interface MvvmLifeCycle<VM> : ViewLifecycle where VM : BaseViewModel<*, *> {
         with(viewModel) {
             stateLiveData.observe(viewLifecycleOwner, Observer {
                 when (it) {
-                    is State.Done -> onStateSuccess(it)
-                    is State.Error -> onStateFailure(it)
-                    is State.Empty -> onStateEmpty(it)
-                    is State.Loading -> onStateLoading(it)
-                    is State.Init -> onStateInit(it)
-                    is State.Custom -> onStateCustom(it)
+                    is Resource.Success -> onStateSuccess(it)
+                    is Resource.Error -> onStateFailure(it)
+                    is Resource.Empty -> onStateEmpty(it)
+                    is Resource.Loading -> onStateLoading(it)
+                    is Resource.Init -> onStateInit(it)
+                    is Resource.Custom -> onStateCustom(it)
                 }
             })
         }
     }
 
-    fun onStateInit(state: State.Init) = showToast(state::class.java.simpleName)
+    fun onStateInit(resource: Resource.Init) = showToast(resource::class.java.simpleName)
 
-    fun onStateLoading(state: State.Loading) = showToast(state::class.java.simpleName)
+    fun onStateLoading(resource: Resource.Loading) = showToast(resource::class.java.simpleName)
 
-    fun onStateSuccess(state: State.Done) = showToast(state::class.java.simpleName)
+    fun onStateSuccess(resource: Resource.Success<*>) = showToast(resource::class.java.simpleName)
 
-    fun onStateEmpty(state: State.Empty) = showToast(state::class.java.simpleName)
+    fun onStateEmpty(resource: Resource.Empty) = showToast(resource::class.java.simpleName)
 
-    fun onStateFailure(state: State.Error) = showToast(state.error.message)
+    fun onStateFailure(resource: Resource.Error) = showToast(resource.message)
 
-    fun onStateCustom(state: State.Custom) = showToast(state::class.java.simpleName)
+    fun onStateCustom(resource: Resource.Custom) = showToast(resource::class.java.simpleName)
 
 }

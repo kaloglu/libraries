@@ -1,9 +1,14 @@
 package com.kaloglu.library.ui.viewmodel.mvi
 
-import com.kaloglu.library.ui.models.ErrorModel
-import java.util.*
-
-interface State {
+enum class State {
+    SUCCESS,
+    ERROR,
+    LOADING,
+    EMPTY,
+    INIT,
+    CUSTOM
+}
+/*interface State {
     val type: StateType
     val value: Int
         get() = type.value
@@ -56,16 +61,21 @@ interface State {
             get() = StateType.ERROR
     }
 
-    /**
-     *  usage :
-     *      class Custom : State {
-     *          override val valueInt: Int
-     *              get() = 999
-     *      }
-     * */
+    */
+/**
+ *  usage :
+ *      class Custom : State {
+ *          override val valueInt: Int
+ *              get() = 999
+ *      }
+ * *//*
     interface Custom : State {
         override val type
             get() = StateType.CUSTOM
     }
 
-}
+    fun done(): Done
+    fun empty(): Empty
+    fun loading(): Loading
+    fun error(error: ErrorModel): Error
+}*/

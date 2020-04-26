@@ -31,4 +31,8 @@ interface Event {
         override val type
             get() = EventType.CUSTOM
     }
+
+    fun init(): Event
+    fun done(): Event
+    fun custom(): Event
 }

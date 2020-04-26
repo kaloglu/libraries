@@ -5,13 +5,13 @@ import androidx.annotation.CallSuper
 import androidx.lifecycle.*
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.ui.viewmodel.mvi.Event
-import com.kaloglu.library.ui.viewmodel.mvi.State
+import com.kaloglu.library.ui.viewmodel.mvi.Resource
 
 @Suppress("MemberVisibilityCanBePrivate")
-abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewModel(application)
-        where E : Event, S : State {
+abstract class BaseViewModel<E, R>(application: BaseApplication) : AndroidViewModel(application)
+        where E : Event, R : Resource<*> {
 
-    val stateLiveData = MediatorLiveData<S>()
+    val stateLiveData = MediatorLiveData<R>()
 
     private val eventLiveData = MutableLiveData<E>()
 
@@ -38,7 +38,7 @@ abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewMo
         }
     }
 
-    fun postState(state: S) = stateLiveData.postValue(state)
+    fun postState(resource: R) = stateLiveData.postValue(resource)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     abstract fun onInit()
