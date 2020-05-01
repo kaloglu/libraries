@@ -3,7 +3,6 @@
 package com.kaloglu.library.ktx
 
 import com.kaloglu.library.ktx.GenericExtensions.DateStringPattern
-import com.kaloglu.library.ktx.GenericExtensions.LOCALE_TR
 import com.kaloglu.library.ktx.GenericExtensions.UI_DATE_FORMAT
 import java.text.SimpleDateFormat
 import java.util.*
@@ -42,13 +41,16 @@ fun Long.getMinutes() = TimeUnit.SECONDS.toMinutes(this)
 
 fun Long.getSeconds() = this - (this.getMinutes() * 60)
 
-fun Date.getMonthName() =
-    calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, LOCALE_TR) ?: ""
+fun Date.getMonthName(locale: Locale = Locale.getDefault()) =
+    calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, locale) ?: ""
 
 fun Date.getDayOfMonth() = calendar().get(Calendar.DAY_OF_MONTH)
 
-fun Long.toDateTime(datePattern: String = DateStringPattern): String =
-    SimpleDateFormat(datePattern, LOCALE_TR).format(Date(this))
+fun Long.toDateTime(
+    datePattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+): String =
+    SimpleDateFormat(datePattern, locale).format(Date(this))
 
 fun currentTimeForLong() = System.currentTimeMillis()
 
@@ -56,10 +58,15 @@ fun Date.toFormattedDate(): String = UI_DATE_FORMAT.format(this)
 
 fun Long.toFormattedDate() = Date(this).toFormattedDate()
 
-fun String.toFormattedDate() =
-    SimpleDateFormat(DateStringPattern, LOCALE_TR).parse(this)?.toFormattedDate()
+fun String.toFormattedDate(locale: Locale = Locale.getDefault()) =
+    SimpleDateFormat(DateStringPattern, locale).parse(this)?.toFormattedDate()
 
-@JvmOverloads
-fun String.toTimeStampLong(dateStringPattern: String = DateStringPattern) =
-    SimpleDateFormat(dateStringPattern, LOCALE_TR).parse(this)?.time ?: -1
+fun String.toTimeStampLong(
+    dateStringPattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+) =
+    SimpleDateFormat(dateStringPattern, locale).parse(this)?.time ?: -1
+
+fun String.toDate(datePattern: String = DateStringPattern) =
+    SimpleDateFormat(datePattern, Locale.getDefault()).parse(this)
 
