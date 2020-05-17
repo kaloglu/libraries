@@ -4,20 +4,19 @@ import android.view.View
 import android.view.ViewGroup
 import com.kaloglu.library.ui.BaseRecyclerAdapter
 import com.kaloglu.library.ui.BaseViewHolder
-import com.kaloglu.library.ui.viewmodel.model.RecyclerViewModel
+import com.kaloglu.library.ui.RecyclerItem
 
-abstract class BaseRecyclerAdapter<RVM, VH> :
-    BaseRecyclerAdapter<RVM, VH>()
-        where RVM : RecyclerViewModel<*, *>, VH : BaseViewHolder<RVM> {
+abstract class BaseRecyclerAdapter<RI, VH> : BaseRecyclerAdapter<RI, VH>()
+        where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 
-    override var onItemClick: ((RVM, Int) -> Unit)? = null
-    override var onViewClick: ((RVM, View, Int) -> Unit)? = null
+    override var onItemClick: ((RI, Int) -> Unit)? = null
+    override var onViewClick: ((RI, View, Int) -> Unit)? = null
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
 
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder
             .setOnViewClick(onViewClick)
-            .bindItem(getItem(position), onItemClick)
+            .bind(getItem(position), onItemClick)
 
 }

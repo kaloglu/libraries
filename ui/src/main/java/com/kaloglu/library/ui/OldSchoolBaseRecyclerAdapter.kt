@@ -22,7 +22,7 @@ abstract class OldSchoolBaseRecyclerAdapter<RI, VH>
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder
             .setOnViewClick(onViewClick)
-            .bindItem(items[position], onItemClick)
+            .bind(items[position], onItemClick)
 
     override fun getItemCount() = items.size
 

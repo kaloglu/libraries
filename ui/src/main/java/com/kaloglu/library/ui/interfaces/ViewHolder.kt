@@ -1,8 +1,10 @@
 package com.kaloglu.library.ui.interfaces
 
-interface ViewHolder<M> {
-    fun bindItem(item: M)
+import androidx.lifecycle.LifecycleOwner
 
-    fun bindItem(item: M, onItemClick: ((M, Int) -> Unit)? = null)
+interface ViewHolder<M> : LifecycleOwner {
+    fun bind(item: M)
+
+    fun bind(item: M, onItemClick: ((M, Int) -> Unit)? = null)
 
 }

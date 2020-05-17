@@ -1,16 +1,42 @@
 package com.kaloglu.library.ui.viewmodel.databinding
 
 import android.view.ViewGroup
-import com.kaloglu.library.ui.BaseRecyclerAdapter
-import com.kaloglu.library.ui.viewmodel.databinding.model.RecyclerBindableViewModel
+import com.kaloglu.library.ui.RecyclerItem
+import com.kaloglu.library.ui.viewmodel.BaseRecyclerAdapter
 
-abstract class DataBoundRecyclerAdapter<RBVM> : BaseRecyclerAdapter<RBVM, BoundViewHolder<RBVM>>()
-        where RBVM : RecyclerBindableViewModel<*, *> {
+abstract class DataBoundRecyclerAdapter<RI> : BaseRecyclerAdapter<RI, BoundViewHolder<RI>>()
+        where RI : RecyclerItem {
+
+    private val viewHolders: MutableList<BoundViewHolder<RI>> = mutableListOf()
+
+    override fun getItemViewType(position: Int) = getItem(position).layoutId
+
+    override fun onBindViewHolder(holder: BoundViewHolder<RI>, position: Int) =
+        holder.bind(getItem(position))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
-        BoundViewHolder<RBVM>(parent.inflateViewHolderBinding(viewType))
+        BoundViewHolder<RI>(onCreateBinding(parent, viewType))
+            .apply {
+                viewHolders.add(this)
+            }
 
-    override fun onBindViewHolder(holder: BoundViewHolder<RBVM>, position: Int) =
-        holder.bindVariables(getItem(position))
+    open fun onCreateBinding(parent: ViewGroup, viewType: Int) =
+        parent.inflateViewHolderBinding(viewType)
+
+    override fun onViewAttachedToWindow(holder: BoundViewHolder<RI>) {
+        super.onViewAttachedToWindow(holder)
+        holder.onAttach()
+    }
+
+    override fun onViewDetachedFromWindow(holder: BoundViewHolder<RI>) {
+        super.onViewDetachedFromWindow(holder)
+        holder.onDetach()
+    }
+
+    fun setLifecycleDestroyed() {
+        viewHolders.forEach {
+            it.onDestroyed()
+        }
+    }
 
 }

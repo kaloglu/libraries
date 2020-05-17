@@ -20,11 +20,11 @@ abstract class BaseViewHolder<RVM> constructor(override val containerView: View)
         return this as BaseVH<RVM>
     }
 
-    override fun bindItem(item: RVM, onItemClick: ((RVM, Int) -> Unit)?) {
+    override fun bind(item: RVM, onItemClick: ((RVM, Int) -> Unit)?) {
 
         with(itemView) {
             setOnClickListener { onItemClick?.invoke(item, adapterPosition) }
-            bindItem(item)
+            bind(item)
         }
     }
 }

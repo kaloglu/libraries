@@ -19,7 +19,7 @@ abstract class BaseRecyclerAdapter<RI, VH> :
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder
             .setOnViewClick(onViewClick)
-            .bindItem(getItem(position), onItemClick)
+            .bind(getItem(position), onItemClick)
 
     /*class Seperator(
         override var parent: RecyclerItem,
