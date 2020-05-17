@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.ListAdapter
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
 
-abstract class BaseRecyclerAdapter<RI, VH> :
-    ListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(DiffItemSimpleCallback<RI>()).build()),
+abstract class BaseRecyclerAdapter<RI, VH>(
+    diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
+) : ListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(diffUtilCallback).build()),
     ClickableRecyclerItemAdapter<RI>
         where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 

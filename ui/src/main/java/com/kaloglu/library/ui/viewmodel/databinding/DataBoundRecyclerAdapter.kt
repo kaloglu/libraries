@@ -1,10 +1,13 @@
 package com.kaloglu.library.ui.viewmodel.databinding
 
 import android.view.ViewGroup
+import com.kaloglu.library.ui.DiffItemSimpleCallback
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.viewmodel.BaseRecyclerAdapter
 
-abstract class DataBoundRecyclerAdapter<RI> : BaseRecyclerAdapter<RI, BoundViewHolder<RI>>()
+abstract class DataBoundRecyclerAdapter<RI>(
+    diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
+) : BaseRecyclerAdapter<RI, BoundViewHolder<RI>>(diffUtilCallback)
         where RI : RecyclerItem {
 
     private val viewHolders: MutableList<BoundViewHolder<RI>> = mutableListOf()
