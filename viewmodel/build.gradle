@@ -56,6 +56,8 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
     // ktx
     implementation "androidx.collection:collection-ktx:1.1.0"
-    implementation 'androidx.fragment:fragment-ktx:1.2.4'
+    implementation "androidx.fragment:fragment-ktx:1.2.4"
+
+    implementation project(path: ':ui')
 
 }

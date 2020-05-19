@@ -25,6 +25,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding {
+        enabled = true
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -57,5 +60,7 @@ dependencies {
     // ktx
     implementation "androidx.collection:collection-ktx:1.1.0"
     implementation 'androidx.fragment:fragment-ktx:1.2.4'
+    implementation project(path: ':ui')
+    implementation project(path: ':viewmodel')
 
 }

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.kaloglu.library.ui.interfaces.ViewLifecycle
 
 abstract class BaseFragment @ContentView constructor(
-    @LayoutRes internal open val resourceLayoutId: Int = 0
+    @LayoutRes open val resourceLayoutId: Int = 0
 ) : Fragment(resourceLayoutId), ViewLifecycle {
 
     override lateinit var containerView: View

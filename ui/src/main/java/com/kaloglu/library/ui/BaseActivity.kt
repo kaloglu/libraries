@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.kaloglu.library.ui.interfaces.ViewLifecycle
 
 abstract class BaseActivity @ContentView constructor(
-    @LayoutRes internal val resourceLayoutId: Int = 0
+    @LayoutRes val resourceLayoutId: Int = 0
 ) : AppCompatActivity(resourceLayoutId), ViewLifecycle {
     override val activity by lazy { this }
     override var containerView: View? = null

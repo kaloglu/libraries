@@ -12,7 +12,7 @@ import com.kaloglu.library.ui.BaseActivity
 import com.kaloglu.library.ui.interfaces.DialogFragmentLifecycle
 
 abstract class BaseDialogFragment @ContentView constructor(
-    @LayoutRes internal open val resourceLayoutId: Int = 0
+    @LayoutRes open val resourceLayoutId: Int = 0
 ) : DialogFragment(), DialogFragmentLifecycle {
 
     override lateinit var containerView: View

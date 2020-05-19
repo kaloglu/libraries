@@ -1,7 +1,7 @@
 package com.kaloglu.library.ui.interfaces
 
 import android.view.View
-import com.kaloglu.library.ui.BaseViewHolder
+import com.kaloglu.library.ui.adapter.BaseViewHolder
 import com.kaloglu.library.ui.RecyclerItem
 
 interface ClickableRecyclerItem<RI : RecyclerItem> {

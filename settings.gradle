@@ -1,2 +1,4 @@
 include ':ui', ':ktx'
 rootProject.name='Library'
+include ':viewmodel'
+include ':databinding4vm'
