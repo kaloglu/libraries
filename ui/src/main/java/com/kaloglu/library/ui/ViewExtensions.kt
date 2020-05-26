@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.kaloglu.library.ui.adapter.BaseRecyclerAdapter
 
 @JvmOverloads
 fun <A : BaseRecyclerAdapter<*, *>> RecyclerView.setup(

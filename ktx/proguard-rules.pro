@@ -20,6 +20,6 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
--keepclassmembers class com.kaloglu.library.ui.viewmodel.BaseViewModel {
+-keepclassmembers class com.kaloglu.library.BaseViewModel {
    public *;
 }

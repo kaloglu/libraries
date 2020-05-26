@@ -26,10 +26,6 @@ android {
         }
     }
 
-    dataBinding {
-        enabled = true
-    }
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -60,6 +56,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
     // ktx
     implementation "androidx.collection:collection-ktx:1.1.0"
-    implementation "androidx.fragment:fragment-ktx:1.2.3"
+    implementation 'androidx.fragment:fragment-ktx:1.2.4'
 
 }

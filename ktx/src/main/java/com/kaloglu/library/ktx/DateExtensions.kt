@@ -3,8 +3,7 @@
 package com.kaloglu.library.ktx
 
 import com.kaloglu.library.ktx.GenericExtensions.DateStringPattern
-import com.kaloglu.library.ktx.GenericExtensions.LOCALE_TR
-import com.kaloglu.library.ktx.GenericExtensions.UI_DATE_FORMAT
+import com.kaloglu.library.ktx.GenericExtensions.UIDateStringPattern
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -42,24 +41,43 @@ fun Long.getMinutes() = TimeUnit.SECONDS.toMinutes(this)
 
 fun Long.getSeconds() = this - (this.getMinutes() * 60)
 
-fun Date.getMonthName() =
-    calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, LOCALE_TR) ?: ""
+fun Date.getMonthName(locale: Locale = Locale.getDefault()) =
+    calendar().getDisplayName(Calendar.MONTH, Calendar.SHORT, locale) ?: ""
 
 fun Date.getDayOfMonth() = calendar().get(Calendar.DAY_OF_MONTH)
 
-fun Long.toDateTime(datePattern: String = DateStringPattern): String =
-    SimpleDateFormat(datePattern, LOCALE_TR).format(Date(this))
+fun currentTimestamp() = System.currentTimeMillis()
 
-fun currentTimeForLong() = System.currentTimeMillis()
+fun String?.toTimeStamp(
+    datePattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+) = (
+        this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
+            ?: Date(1900, 1, 1)
+        ).time
 
-fun Date.toFormattedDate(): String = UI_DATE_FORMAT.format(this)
+fun String?.toDate(
+    datePattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+) =
+    this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
+        ?: Date(1900, 1, 1)
 
-fun Long.toFormattedDate() = Date(this).toFormattedDate()
+fun Date.toDateString(
+    uiPattern: String = UIDateStringPattern,
+    locale: Locale = Locale.getDefault()
+): String = SimpleDateFormat(uiPattern, locale).format(this)
 
-fun String.toFormattedDate() =
-    SimpleDateFormat(DateStringPattern, LOCALE_TR).parse(this)?.toFormattedDate()
+fun String.toDateString(
+    datePattern: String = DateStringPattern,
+    uiPattern: String = UIDateStringPattern,
+    locale: Locale = Locale.getDefault()
+) = this.toDate(datePattern, locale).toDateString(uiPattern, locale = locale)
 
-@JvmOverloads
-fun String.toTimeStampLong(dateStringPattern: String = DateStringPattern) =
-    SimpleDateFormat(dateStringPattern, LOCALE_TR).parse(this)?.time ?: -1
+fun Long.toDateString(
+    uiPattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+) = Date(this).toDateString(uiPattern, locale)
+
+fun Long.toDate() = Date(this)
 
