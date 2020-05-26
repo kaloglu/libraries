@@ -3,7 +3,7 @@
 package com.kaloglu.library.ktx
 
 import com.kaloglu.library.ktx.GenericExtensions.DateStringPattern
-import com.kaloglu.library.ktx.GenericExtensions.UI_DATE_FORMAT
+import com.kaloglu.library.ktx.GenericExtensions.UIDateStringPattern
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -46,27 +46,38 @@ fun Date.getMonthName(locale: Locale = Locale.getDefault()) =
 
 fun Date.getDayOfMonth() = calendar().get(Calendar.DAY_OF_MONTH)
 
-fun Long.toDateTime(
+fun currentTimestamp() = System.currentTimeMillis()
+
+fun String?.toTimeStamp(
     datePattern: String = DateStringPattern,
     locale: Locale = Locale.getDefault()
-): String =
-    SimpleDateFormat(datePattern, locale).format(Date(this))
+) = (
+        this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
+            ?: Date(1900, 1, 1)
+        ).time
 
-fun currentTimeForLong() = System.currentTimeMillis()
-
-fun Date.toFormattedDate(): String = UI_DATE_FORMAT.format(this)
-
-fun Long.toFormattedDate() = Date(this).toFormattedDate()
-
-fun String.toFormattedDate(locale: Locale = Locale.getDefault()) =
-    SimpleDateFormat(DateStringPattern, locale).parse(this)?.toFormattedDate()
-
-fun String.toTimeStampLong(
-    dateStringPattern: String = DateStringPattern,
+fun String?.toDate(
+    datePattern: String = DateStringPattern,
     locale: Locale = Locale.getDefault()
 ) =
-    SimpleDateFormat(dateStringPattern, locale).parse(this)?.time ?: -1
+    this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
+        ?: Date(1900, 1, 1)
 
-fun String.toDate(datePattern: String = DateStringPattern) =
-    SimpleDateFormat(datePattern, Locale.getDefault()).parse(this)
+fun Date.toDateString(
+    uiPattern: String = UIDateStringPattern,
+    locale: Locale = Locale.getDefault()
+): String = SimpleDateFormat(uiPattern, locale).format(this)
+
+fun String.toDateString(
+    datePattern: String = DateStringPattern,
+    uiPattern: String = UIDateStringPattern,
+    locale: Locale = Locale.getDefault()
+) = this.toDate(datePattern, locale).toDateString(uiPattern, locale = locale)
+
+fun Long.toDateString(
+    uiPattern: String = DateStringPattern,
+    locale: Locale = Locale.getDefault()
+) = Date(this).toDateString(uiPattern, locale)
+
+fun Long.toDate() = Date(this)
 

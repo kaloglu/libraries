@@ -37,8 +37,6 @@ object GenericExtensions {
     val TURKISH_CHARS = arrayOf("ş", "Ş", "ğ", "Ğ", "ı", "İ", "ü", "Ü", "ö", "Ö", "ç", "Ç")
     val NEUTRAL_CHARS = arrayOf("DateStringPattern", "S", "g", "G", "i", "I", "u", "U", "o", "CommentsCallBack", "c", "C")
 
-    val UI_DATE_FORMAT = SimpleDateFormat(UIDateStringPattern, LOCALE_TR)
-
 }
 
 @JvmOverloads
