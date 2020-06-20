@@ -46,7 +46,7 @@ abstract class BaseViewHolder<RI>(override val containerView: View) :
 
     override fun onDetach() {
         paused = true
-        lifecycleRegistry.currentState = Lifecycle.State.CREATED
+        lifecycleRegistry.currentState = Lifecycle.State.DESTROYED
     }
 
     override fun onDestroyed() {
