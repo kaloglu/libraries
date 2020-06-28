@@ -1,4 +1,5 @@
 @file:JvmName("UiViewUtil")
+
 package com.kaloglu.library.ui
 
 import android.os.Bundle
@@ -30,14 +31,26 @@ fun <A : BaseRecyclerAdapter<*, *>> RecyclerView.setup(
 }
 
 fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
-        A.setItemClickListener(onClick: ((RI, Int) -> Unit)): BaseRecyclerAdapter<RI, *> {
+        A.setItemClickListener(onClick: ((RI, Int) -> Unit)): A {
     this.onItemClick = onClick
     return this
 }
 
 fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
-        A.setViewClickListener(onClick: ((RI, View, Int) -> Unit)): BaseRecyclerAdapter<RI, *> {
+        A.setItemLongClickListener(onLongClick: ((RI, Int) -> Boolean)): A {
+    this.onItemLongClick = onLongClick
+    return this
+}
+
+fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
+        A.setViewClickListener(onClick: ((RI, View, Int) -> Unit)): A {
     this.onViewClick = onClick
+    return this
+}
+
+fun <A : BaseRecyclerAdapter<RI, *>, RI : RecyclerItem>
+        A.setViewLongClickListener(onLongClick: ((RI, View, Int) -> Boolean)): A {
+    this.onViewLongClick = onLongClick
     return this
 }
 

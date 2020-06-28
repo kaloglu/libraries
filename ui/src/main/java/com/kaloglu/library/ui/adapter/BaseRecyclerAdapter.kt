@@ -15,7 +15,10 @@ abstract class BaseRecyclerAdapter<RI, VH>(
         where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 
     override var onItemClick: ((RI, Int) -> Unit)? = null
+    override var onItemLongClick: (RI, Int) -> Boolean = { _, _ -> false }
     override var onViewClick: ((RI, View, Int) -> Unit)? = null
+    override var onViewLongClick: (RI, View, Int) -> Boolean = { _, _, _ -> false }
+
     internal val viewHolders: MutableList<VH> = mutableListOf()
 
     abstract override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH
@@ -27,8 +30,8 @@ abstract class BaseRecyclerAdapter<RI, VH>(
     override fun onBindViewHolder(holder: VH, position: Int) =
         holder
             .addLifeCycleList()
-            .setOnViewClick(onViewClick)
-            .bind(getItem(position), onItemClick)
+            .setClicks(onViewClick, onViewLongClick)
+            .bind(getItem(position), onItemClick, onItemLongClick)
 
     override fun onViewAttachedToWindow(holder: VH) {
         super.onViewAttachedToWindow(holder)
