@@ -20,14 +20,26 @@ abstract class BaseViewHolder<RI>(override val containerView: View) :
     private var paused: Boolean = false
 
     override var onViewClick: ((RI, View, Int) -> Unit)? = null
+    override var onViewLongClick: (RI, View, Int) -> Boolean = { _, _, _ -> false }
 
-    override fun bind(item: RI, onItemClick: ((RI, Int) -> Unit)?) {
+    override fun bind(
+        item: RI,
+        onItemClick: ((RI, Int) -> Unit)?,
+        onItemLongClick: ((RI, Int) -> Boolean)
+    ) {
         containerView.setOnClickListener { onItemClick?.invoke(item, adapterPosition) }
+        containerView.setOnLongClickListener { onItemLongClick.invoke(item, adapterPosition) }
         bind(item)
     }
 
-    override fun setOnViewClick(onViewClick: ((RI, View, Int) -> Unit)?): BaseViewHolder<RI> {
+    override fun setClicks(
+        onViewClick: ((RI, View, Int) -> Unit)?,
+        onViewLongClick: (RI, View, Int) -> Boolean
+    ): BaseViewHolder<RI> {
+
         this.onViewClick = onViewClick
+        this.onViewLongClick = onViewLongClick
+
         return this
     }
 
