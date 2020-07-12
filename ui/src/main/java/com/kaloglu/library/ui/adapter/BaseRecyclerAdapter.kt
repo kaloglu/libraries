@@ -5,11 +5,7 @@ import com.kaloglu.library.ui.RecyclerItem
 
 @Deprecated(
     "Removal",
-    replaceWith = ReplaceWith(
-        "BaseListAdapter<RI, VH>(\n" +
-                "    diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()\n" +
-                ")"
-    ), level = DeprecationLevel.ERROR
+    replaceWith = ReplaceWith("BaseListAdapter"), level = DeprecationLevel.ERROR
 )
 abstract class BaseRecyclerAdapter<RI, VH>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()

@@ -6,11 +6,7 @@ import com.kaloglu.library.ui.adapter.BaseListAdapter
 
 @Deprecated(
     "Removal",
-    replaceWith = ReplaceWith(
-        "DataBoundListAdapter<RI>(\n" +
-                "    diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()\n" +
-                ")"
-    ), level = DeprecationLevel.ERROR
+    replaceWith = ReplaceWith("DataBoundListAdapter<RI>"), level = DeprecationLevel.ERROR
 )
 abstract class DataBoundRecyclerAdapter<RI>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
