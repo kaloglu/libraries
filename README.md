@@ -4,7 +4,7 @@
 * [Home](https://github.com/kaloglu/libraries/wiki/Home)
 * [BindingFragment](https://github.com/kaloglu/libraries/wiki/BindingFragment)
 * [BindableViewModel](https://github.com/kaloglu/libraries/wiki/BindableViewModel)
-* [DataBoundRecyclerAdapter](https://github.com/kaloglu/libraries/wiki/DataBoundRecyclerAdapter)
+* [DataBoundListAdapter](https://github.com/kaloglu/libraries/wiki/DataBoundListAdapter)
 * [Interractors](https://github.com/kaloglu/libraries/wiki/Interractors)
 * [States & Events for MVI](https://github.com/kaloglu/libraries/wiki/States-&-Events-for-MVI)
 
