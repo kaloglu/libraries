@@ -1,12 +1,14 @@
 package com.kaloglu.library.databinding4vm
 
 import androidx.databinding.BindingAdapter
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.RecyclerView
+import com.kaloglu.library.databinding4vm.adapter.DataBoundListAdapter
+import com.kaloglu.library.databinding4vm.adapter.DataBoundPagedListAdapter
 import com.kaloglu.library.ui.RecyclerItem
-import com.kaloglu.library.databinding4vm.adapter.DataBoundRecyclerAdapter
 
 @BindingAdapter("adapter")
-fun <RI : RecyclerItem, A : DataBoundRecyclerAdapter<RI>> setRecyclerViewAdapter(
+fun <RI : RecyclerItem, A : RecyclerView.Adapter<*>> setRecyclerViewAdapter(
     recyclerView: RecyclerView,
     adapter: A?
 ) {
@@ -15,12 +17,21 @@ fun <RI : RecyclerItem, A : DataBoundRecyclerAdapter<RI>> setRecyclerViewAdapter
 
 @Suppress("UNCHECKED_CAST")
 @BindingAdapter("items")
-fun <RI : RecyclerItem> setRecyclerViewItems(
+fun <RI : RecyclerItem> setItems(
     recyclerView: RecyclerView,
-    items: MutableList<RI>
+    items: Collection<RI>
 ) {
-    val adapter: RecyclerView.Adapter<RecyclerView.ViewHolder>? = recyclerView.adapter
-    if (adapter != null) {
-        (adapter as DataBoundRecyclerAdapter<RI>).submitList(items)
+    recyclerView.adapter?.apply {
+        when (items) {
+            is MutableList<RI> -> {
+                (this as DataBoundListAdapter<RI>)
+                submitList(items)
+            }
+            is PagedList<RI> -> {
+                (this as DataBoundPagedListAdapter<RI>)
+                submitList(items)
+            }
+        }
     }
+
 }

@@ -23,10 +23,12 @@ abstract class BaseViewHolder<RI>(override val containerView: View) :
     override var onViewLongClick: (RI, View, Int) -> Boolean = { _, _, _ -> false }
 
     override fun bind(
-        item: RI,
+        item: RI?,
         onItemClick: ((RI, Int) -> Unit)?,
         onItemLongClick: ((RI, Int) -> Boolean)
     ) {
+        if (item == null) return
+
         containerView.setOnClickListener { onItemClick?.invoke(item, adapterPosition) }
         containerView.setOnLongClickListener { onItemLongClick.invoke(item, adapterPosition) }
         bind(item)

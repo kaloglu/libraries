@@ -8,7 +8,7 @@ import com.kaloglu.library.ui.DiffItemSimpleCallback
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
 
-abstract class BaseRecyclerAdapter<RI, VH>(
+abstract class BasePagedListAdapter<RI, VH>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
 ) : ListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(diffUtilCallback).build()),
     ClickableRecyclerItemAdapter<RI>
@@ -43,7 +43,7 @@ abstract class BaseRecyclerAdapter<RI, VH>(
         holder.onDetach()
     }
 
-    override fun getItemViewType(position: Int) = getItem(position).layoutId
+    override fun getItemViewType(position: Int) = getItem(position)?.layoutId ?: 0
 
     open fun onLifecycleDestroyed() {
         viewHolders.forEach {

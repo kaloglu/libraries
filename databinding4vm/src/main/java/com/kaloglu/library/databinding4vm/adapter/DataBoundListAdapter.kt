@@ -3,14 +3,14 @@ package com.kaloglu.library.databinding4vm.adapter
 import android.view.ViewGroup
 import androidx.annotation.CallSuper
 import androidx.databinding.ViewDataBinding
-import com.kaloglu.library.ui.adapter.BaseRecyclerAdapter
+import com.kaloglu.library.ui.adapter.BaseListAdapter
 import com.kaloglu.library.ui.DiffItemSimpleCallback
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.databinding4vm.inflateViewHolderBinding
 
-abstract class DataBoundRecyclerAdapter<RI>(
+abstract class DataBoundListAdapter<RI>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
-) : BaseRecyclerAdapter<RI, BoundViewHolder<RI>>(diffUtilCallback)
+) : BaseListAdapter<RI, BoundViewHolder<RI>>(diffUtilCallback)
         where RI : RecyclerItem {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =
