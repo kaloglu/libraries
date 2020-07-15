@@ -2,15 +2,15 @@ package com.kaloglu.library.ui.adapter
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.AsyncDifferConfig
-import androidx.recyclerview.widget.ListAdapter
 import com.kaloglu.library.ui.DiffItemSimpleCallback
 import com.kaloglu.library.ui.RecyclerItem
 import com.kaloglu.library.ui.interfaces.ClickableRecyclerItemAdapter
 
 abstract class BasePagedListAdapter<RI, VH>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
-) : ListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(diffUtilCallback).build()),
+) : PagedListAdapter<RI, VH>(AsyncDifferConfig.Builder<RI>(diffUtilCallback).build()),
     ClickableRecyclerItemAdapter<RI>
         where RI : RecyclerItem, VH : BaseViewHolder<RI> {
 
