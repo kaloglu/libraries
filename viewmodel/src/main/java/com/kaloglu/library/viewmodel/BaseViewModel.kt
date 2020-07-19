@@ -2,7 +2,12 @@ package com.kaloglu.library.viewmodel
 
 import android.util.Log
 import androidx.annotation.CallSuper
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.OnLifecycleEvent
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.viewmodel.mvi.Event
 import com.kaloglu.library.viewmodel.mvi.State
@@ -32,13 +37,13 @@ abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewMo
         }
     }
 
+    fun postState(state: S) = stateLiveData.postValue(state)
+
     protected fun <T> LiveData<T>.mapToEvent(onChanged: (T?) -> E) {
         stateLiveData.addSource(this) {
             postEvent(onChanged(it))
         }
     }
-
-    fun postState(state: S) = stateLiveData.postValue(state)
 
     @OnLifecycleEvent(Lifecycle.Event.ON_START)
     abstract fun onInit()
