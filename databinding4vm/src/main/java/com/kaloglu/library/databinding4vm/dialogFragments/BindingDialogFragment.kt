@@ -10,12 +10,15 @@ import com.kaloglu.library.databinding4vm.BindableViewModel
 import com.kaloglu.library.databinding4vm.inflateViewBinding
 import com.kaloglu.library.databinding4vm.interfaces.DataBindingDialog
 import com.kaloglu.library.viewmodel.dialogFragments.ViewModelDialogFragment
+import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
-abstract class BindingDialogFragment<VDB, VM> @ContentView
+@ExperimentalCoroutinesApi
+abstract class BindingDialogFragment<VDB, VM, S> @ContentView
 constructor(@LayoutRes override val resourceLayoutId: Int = 0) :
-    ViewModelDialogFragment<VM>(),
-    DataBindingDialog<VDB, VM>
-        where VDB : ViewDataBinding, VM : BindableViewModel<*, *> {
+    ViewModelDialogFragment<VM, S>(),
+    DataBindingDialog<VDB, VM, S>
+        where VDB : ViewDataBinding, VM : BindableViewModel<*, S>, S : State {
 
     override lateinit var viewDataBinding: VDB
 

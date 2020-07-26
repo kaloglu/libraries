@@ -1,45 +1,38 @@
 package com.kaloglu.library.viewmodel
 
-import android.util.Log
-import androidx.annotation.CallSuper
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
+import androidx.lifecycle.viewModelScope
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.viewmodel.mvi.Event
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
-@Suppress("MemberVisibilityCanBePrivate")
-abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewModel(application)
+@ExperimentalCoroutinesApi
+abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewModel(application),
+    LifecycleObserver
         where E : Event, S : State {
 
-    val stateLiveData = MediatorLiveData<S>()
+    abstract val stateFlow: MutableStateFlow<S>
+    abstract val eventFlow: MutableStateFlow<E>
 
-    private val eventLiveData = MutableLiveData<E>()
-
-    init {
-        stateLiveData.addSource(eventLiveData, ::onEvent)
-        Log.e("VIEWMODEL", "INIT!")
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    open fun onInit() {
+        eventFlow.onEach(::onEvent).launchIn(viewModelScope)
     }
 
-    @CallSuper
-    open fun postEvent(event: E) = eventLiveData.postValue(event)
-
-    @CallSuper
-    protected open fun onEvent(event: E) {
-        when (event) {
-            is Event.Init -> onInit()
-            else -> {
-            }
-        }
+    fun postEvent(event: E) {
+        eventFlow.value = event
     }
 
-    protected fun <T> LiveData<T>.mapToEvent(onChanged: (T?) -> E) {
-        stateLiveData.addSource(this) {
-            postEvent(onChanged(it))
-        }
+    fun postState(state: S) {
+        stateFlow.value = state
     }
 
-    fun postState(state: S) = stateLiveData.postValue(state)
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    abstract fun onInit()
+    protected open suspend fun onEvent(event: E) = Unit
 }
