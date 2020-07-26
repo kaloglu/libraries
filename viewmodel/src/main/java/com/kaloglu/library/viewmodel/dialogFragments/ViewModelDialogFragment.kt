@@ -6,7 +6,9 @@ import com.kaloglu.library.ui.dialogFragments.BaseDialogFragment
 import com.kaloglu.library.viewmodel.BaseViewModel
 import com.kaloglu.library.viewmodel.interfaces.MvvmDialogLifeCycle
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 abstract class ViewModelDialogFragment<VM, S>(@LayoutRes override val resourceLayoutId: Int = 0) :
     BaseDialogFragment(resourceLayoutId),
     MvvmDialogLifeCycle<VM, S>

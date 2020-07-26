@@ -1,26 +1,28 @@
 package com.kaloglu.library.viewmodel.interfaces
 
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import com.kaloglu.library.ui.interfaces.ViewLifecycle
 import com.kaloglu.library.viewmodel.BaseViewModel
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.onEach
 
+@ExperimentalCoroutinesApi
 interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S : State {
     val viewModel: VM
 
     fun observeViewModel(viewLifecycleOwner: LifecycleOwner) {
         with(viewModel) {
-            stateLiveData.observe(viewLifecycleOwner, Observer {
+            stateFlow.onEach {
                 when (it) {
                     is State.Success -> onStateSuccess(it)
                     is State.Error -> onStateFailure(it)
                     is State.Empty -> onStateEmpty(it)
                     is State.Loading -> onStateLoading(it)
                     is State.Init -> onStateInit(it)
-                    is State.Custom -> onStateCustom(it)
+                    is State.Custom -> onState(it)
                 }
-            })
+            }
         }
     }
 
@@ -34,6 +36,6 @@ interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S
 
     fun <S : State.Error> onStateFailure(error: S) = showToast(error.error.message)
 
-    fun <S : State.Custom> onStateCustom(custom: S) = showToast(custom::class.java.simpleName)
+    fun <S : State.Custom> onState(state: S) = showToast(state::class.java.simpleName)
 
 }

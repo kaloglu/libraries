@@ -1,7 +1,7 @@
 package com.kaloglu.library.viewmodel.mvi
 
 import com.kaloglu.library.ui.models.ErrorModel
-import java.util.*
+import java.util.MissingFormatArgumentException
 
 interface State {
     val type: StateType
@@ -71,4 +71,5 @@ interface State {
             get() = StateType.CUSTOM
     }
 
+    fun init()
 }

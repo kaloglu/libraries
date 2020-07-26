@@ -6,7 +6,9 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.databinding4vm.interfaces.DataBinding
 import com.kaloglu.library.viewmodel.ViewModelActivity
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 abstract class BindingActivity<VDB, VM, S> : ViewModelActivity<VM, S>(),
     DataBinding<VDB, VM, S>
         where VM : BindableViewModel<*, S>, S : State, VDB : ViewDataBinding {

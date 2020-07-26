@@ -9,7 +9,9 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.databinding4vm.interfaces.DataBinding
 import com.kaloglu.library.viewmodel.ViewModelFragment
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 abstract class BindingFragment<VDB, VM, S> @ContentView
 constructor(@LayoutRes override val resourceLayoutId: Int = 0) :
     ViewModelFragment<VM, S>(),

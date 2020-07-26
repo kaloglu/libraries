@@ -4,7 +4,9 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.databinding4vm.BindableViewModel
 import com.kaloglu.library.viewmodel.interfaces.MvvmDialogLifeCycle
 import com.kaloglu.library.viewmodel.mvi.State
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 interface DataBindingDialog<VDB, VM, S> :
     MvvmDialogLifeCycle<VM, S>
         where VDB : ViewDataBinding, VM : BindableViewModel<*, S>, S : State {

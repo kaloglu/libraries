@@ -5,7 +5,9 @@ package com.kaloglu.library.ktx
 import com.kaloglu.library.ktx.GenericExtensions.DateStringPattern
 import com.kaloglu.library.ktx.GenericExtensions.UIDateStringPattern
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 fun Date.isToday(): Boolean = isSameDay(Date())
@@ -53,7 +55,7 @@ fun String?.toTimeStamp(
     locale: Locale = Locale.getDefault()
 ) = (
         this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
-            ?: Date(1900, 1, 1)
+            ?: Date()
         ).time
 
 fun String?.toDate(
@@ -61,7 +63,7 @@ fun String?.toDate(
     locale: Locale = Locale.getDefault()
 ) =
     this?.let { SimpleDateFormat(datePattern, locale).parse(this) }
-        ?: Date(1900, 1, 1)
+        ?: Date()
 
 fun Date.toDateString(
     uiPattern: String = UIDateStringPattern,

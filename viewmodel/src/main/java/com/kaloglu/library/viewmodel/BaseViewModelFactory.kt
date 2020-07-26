@@ -4,7 +4,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kaloglu.library.ui.BaseApplication
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 
+@ExperimentalCoroutinesApi
 @Suppress("MemberVisibilityCanBePrivate")
 open class BaseViewModelFactory<A>(val application: A, val lifecycle: Lifecycle) :
     ViewModelProvider.AndroidViewModelFactory(application)
