@@ -66,9 +66,14 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$archLifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$archLifecycleVersion"
     // ktx
-    implementation "androidx.collection:collection-ktx:1.1.0"
-    implementation 'androidx.fragment:fragment-ktx:1.2.5'
-    implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
+    implementation "androidx.collection:collection-ktx:$collectionVersion"
+    implementation "androidx.fragment:fragment-ktx:$fragmentVersion"
+
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVersion"
+
+    implementation "android.arch.paging:runtime:$pagingVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
     implementation project(path: ':ui')
     implementation project(path: ':viewmodel')
 
