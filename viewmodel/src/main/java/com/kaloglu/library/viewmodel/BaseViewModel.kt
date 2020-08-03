@@ -31,7 +31,7 @@ abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewMo
             .launchIn(viewModelScope)
     }
 
-    open fun <VM : BaseViewModel<*, *>> attachViewModel(viewModel: VM) = Unit
+    open fun <VM : BaseViewModel<*, *>> attachViewModel(vararg viewModels: VM) = Unit
 
     fun postEvent(event: E) {
         _eventFlow.value = event
