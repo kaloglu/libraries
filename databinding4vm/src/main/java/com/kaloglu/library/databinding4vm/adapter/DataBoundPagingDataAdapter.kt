@@ -6,11 +6,11 @@ import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.databinding4vm.inflateViewHolderBinding
 import com.kaloglu.library.ui.DiffItemSimpleCallback
 import com.kaloglu.library.ui.RecyclerItem
-import com.kaloglu.library.ui.adapter.BasePagedListAdapter
+import com.kaloglu.library.ui.adapter.BasePagingDataAdapter
 
-abstract class DataBoundPagedListAdapter<RI>(
+abstract class DataBoundPagingDataAdapter<RI>(
     diffUtilCallback: DiffItemSimpleCallback<RI> = DiffItemSimpleCallback()
-) : BasePagedListAdapter<RI, BoundViewHolder<RI>>(diffUtilCallback)
+) : BasePagingDataAdapter<RI, BoundViewHolder<RI>>(diffUtilCallback)
         where RI : RecyclerItem {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) =

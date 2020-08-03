@@ -58,5 +58,6 @@ dependencies {
     implementation "androidx.collection:collection-ktx:1.1.0"
     implementation 'androidx.fragment:fragment-ktx:1.2.5'
     implementation "android.arch.paging:runtime:$pagingVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$pagingVersion"
 
 }
