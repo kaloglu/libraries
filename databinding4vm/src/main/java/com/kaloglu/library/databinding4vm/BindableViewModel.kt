@@ -24,4 +24,5 @@ abstract class BindableViewModel<E, S>(application: BaseApplication) :
     override fun <T : BaseModel> equals(obj2: T): Boolean = false
 
     override var layoutId: Int = -1
+
 }

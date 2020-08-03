@@ -1,15 +1,15 @@
 package com.kaloglu.library.viewmodel
 
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
 import androidx.lifecycle.viewModelScope
 import com.kaloglu.library.ui.BaseApplication
 import com.kaloglu.library.viewmodel.mvi.Event
 import com.kaloglu.library.viewmodel.mvi.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -18,20 +18,27 @@ abstract class BaseViewModel<E, S>(application: BaseApplication) : AndroidViewMo
     LifecycleObserver
         where E : Event, S : State {
 
-    abstract val stateFlow: MutableStateFlow<S>
-    abstract val eventFlow: MutableStateFlow<E>
+    val stateFlow: StateFlow<S?>
+        get() = _stateFlow
 
-    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    open fun onInit() {
-        eventFlow.onEach(::onEvent).launchIn(viewModelScope)
+    private val _stateFlow: MutableStateFlow<S?> = MutableStateFlow(null)
+    private val _eventFlow: MutableStateFlow<E?> = MutableStateFlow(null)
+
+    init {
+        _eventFlow
+            .filterNotNull()
+            .onEach(::onEvent)
+            .launchIn(viewModelScope)
     }
+
+    open fun <VM : BaseViewModel<*, *>> attachViewModel(vararg viewModels: VM) = Unit
 
     fun postEvent(event: E) {
-        eventFlow.value = event
+        _eventFlow.value = event
     }
 
-    fun postState(state: S) {
-        stateFlow.value = state
+    protected fun postState(state: S) {
+        _stateFlow.value = state
     }
 
     protected open suspend fun onEvent(event: E) = Unit

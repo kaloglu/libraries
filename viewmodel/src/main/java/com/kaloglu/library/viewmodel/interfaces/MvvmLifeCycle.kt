@@ -7,6 +7,7 @@ import com.kaloglu.library.ui.models.ErrorModel
 import com.kaloglu.library.viewmodel.BaseViewModel
 import com.kaloglu.library.viewmodel.mvi.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -17,16 +18,18 @@ interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S
     fun observeViewModel(viewLifecycleOwner: LifecycleOwner) {
         with(viewModel) {
             onStateInit()
-            stateFlow.onEach {
-                when (it) {
-                    is State.Failure -> onStateFailure(it.error)
-                    is State.Init -> onStateInit()
-                    is State.Loading -> onStateLoading()
-                    is State.Empty -> onStateEmpty()
-                    is State.Done -> onStateDone(it)
-                    else -> onState(it)
-                }
-            }.launchIn(this.viewModelScope)
+            stateFlow
+                .filterNotNull()
+                .onEach {
+                    when (it) {
+                        is State.Failure -> onStateFailure(it.error)
+                        is State.Init -> onStateInit()
+                        is State.Loading -> onStateLoading()
+                        is State.Empty -> onStateEmpty()
+                        is State.Done -> onStateDone(it)
+                        else -> onState(it)
+                    }
+                }.launchIn(this.viewModelScope)
         }
     }
 
