@@ -29,8 +29,13 @@ abstract class BaseViewHolder<RI>(override val containerView: View) :
     ) {
         if (item == null) return
 
-        containerView.setOnClickListener { onItemClick?.invoke(item, adapterPosition) }
-        containerView.setOnLongClickListener { onItemLongClick.invoke(item, adapterPosition) }
+        containerView.setOnClickListener { onItemClick?.invoke(item, absoluteAdapterPosition) }
+        containerView.setOnLongClickListener {
+            onItemLongClick.invoke(
+                item,
+                absoluteAdapterPosition
+            )
+        }
         bind(item)
     }
 

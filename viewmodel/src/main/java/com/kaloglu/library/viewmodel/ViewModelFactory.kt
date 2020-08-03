@@ -40,7 +40,7 @@ open class ViewModelFactory<A>(
                     .apply {
                         this as BaseViewModel<*, *>
                         this.onCreateViewModel()
-                    } as VM
+                    }
             }
             else -> super.create(modelClass)
         }

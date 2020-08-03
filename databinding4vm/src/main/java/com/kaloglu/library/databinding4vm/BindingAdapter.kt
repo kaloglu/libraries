@@ -20,7 +20,7 @@ fun <RI : RecyclerItem, A : RecyclerView.Adapter<*>> setRecyclerViewAdapter(
 @BindingAdapter("items")
 fun <RI : RecyclerItem> setItems(
     recyclerView: RecyclerView,
-    items: List<RI>
+    items: MutableList<RI>
 ) {
     recyclerView.adapter?.apply {
         if (this is DataBoundListAdapter<*>) {
@@ -32,7 +32,7 @@ fun <RI : RecyclerItem> setItems(
 }
 
 @Suppress("UNCHECKED_CAST")
-@BindingAdapter("datas")
+@BindingAdapter("datas", "lifecycleOwner")
 fun <RI : RecyclerItem> setDatas(
     recyclerView: RecyclerView,
     datas: PagingData<RI>,
