@@ -8,15 +8,16 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.ViewDataBinding
 import com.kaloglu.library.databinding4vm.interfaces.DataBinding
 import com.kaloglu.library.viewmodel.ViewModelFragment
+import com.kaloglu.library.viewmodel.mvi.Event
 import com.kaloglu.library.viewmodel.mvi.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 
 @ExperimentalCoroutinesApi
-abstract class BindingFragment<VDB, VM, S> @ContentView
+abstract class BindingFragment<VDB, VM, E, S> @ContentView
 constructor(@LayoutRes override val resourceLayoutId: Int = 0) :
-    ViewModelFragment<VM, S>(),
-    DataBinding<VDB, VM, S>
-        where VDB : ViewDataBinding, VM : BindableViewModel<*, S>, S : State {
+    ViewModelFragment<VM, E, S>(),
+    DataBinding<VDB, VM, E, S>
+        where VDB : ViewDataBinding, VM : BindableViewModel<E, S>, E : Event, S : State {
 
     override lateinit var viewDataBinding: VDB
 

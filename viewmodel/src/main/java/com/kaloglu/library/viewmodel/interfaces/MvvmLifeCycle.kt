@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.kaloglu.library.ui.interfaces.ViewLifecycle
 import com.kaloglu.library.ui.models.ErrorModel
 import com.kaloglu.library.viewmodel.BaseViewModel
+import com.kaloglu.library.viewmodel.mvi.Event
 import com.kaloglu.library.viewmodel.mvi.State
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.collect
@@ -12,7 +13,8 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.launch
 
 @ExperimentalCoroutinesApi
-interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S : State {
+interface MvvmLifeCycle<VM, E, S> :
+    ViewLifecycle where VM : BaseViewModel<E, S>, E : Event, S : State {
     val viewModel: VM
 
     fun observeViewModel(viewLifecycleOwner: LifecycleOwner) {
@@ -26,12 +28,25 @@ interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S
                             when (it) {
                                 is State.Failure -> onStateFailure(it.error)
                                 is State.Init -> onStateInit()
-                                is State.Loading -> onStateLoading()
+                                is State.Loading -> onStateLoading(it.loading)
                                 is State.Empty -> onStateEmpty()
                                 is State.Done -> onStateDone(it)
                                 else -> onState(it)
                             }
                             viewModel.stateIdle()
+                        }
+                    }
+                }
+
+            viewModel.eventFlow
+                .filterNotNull()
+                .collect {
+                    when (it) {
+                        is Event.Idle -> {
+                        }
+                        else -> {
+                            onEvent(it)
+                            viewModel.eventIdle()
                         }
                     }
                 }
@@ -44,12 +59,14 @@ interface MvvmLifeCycle<VM, S> : ViewLifecycle where VM : BaseViewModel<*, S>, S
 
     fun onStateIdle() = showToast("idle")
 
-    fun onStateLoading() = showToast("loading")
+    fun onStateLoading(loading: Boolean) = showToast("loading")
 
     fun onStateEmpty() = showToast("empty")
 
     fun onStateFailure(error: ErrorModel) = showToast(error.message)
 
     fun onState(state: S) = showToast(state::class.java.simpleName)
+
+    fun onEvent(event: E) = showToast(event::class.java.simpleName)
 
 }
