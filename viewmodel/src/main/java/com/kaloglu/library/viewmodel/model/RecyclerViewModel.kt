@@ -10,4 +10,5 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 @ExperimentalCoroutinesApi
 abstract class RecyclerViewModel<E, S>(application: BaseApplication) :
     BaseViewModel<E, S>(application), RecyclerItem
-        where E : Event, S : State
+        where E : Event, S : State {
+}

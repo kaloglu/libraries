@@ -1,3 +1,7 @@
 package com.kaloglu.library.viewmodel.mvi
 
-interface Event
+interface Event {
+    interface Idle : Event {
+
+    }
+}

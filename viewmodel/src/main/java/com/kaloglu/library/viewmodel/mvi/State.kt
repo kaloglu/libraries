@@ -8,10 +8,11 @@ interface State {
     val loading: Boolean
         get() = false
 
-    enum class StateType() {
+    enum class StateType {
         EMPTY,
         LOADING,
         INIT,
+        IDLE,
         ERROR,
         DONE,
         CUSTOM
@@ -20,6 +21,13 @@ interface State {
     interface Init : State {
         override val type: StateType
             get() = StateType.INIT
+
+        override val loading: Boolean
+            get() = true
+    }
+    interface Idle : State {
+        override val type: StateType
+            get() = StateType.IDLE
 
         override val loading: Boolean
             get() = true
